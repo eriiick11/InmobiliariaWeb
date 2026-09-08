@@ -1,0 +1,426 @@
+/* ============================================================
+   Raíz — Portal inmobiliario
+   Hoja de estilos de la landing page
+   ============================================================ */
+
+:root {
+  --forest-950: #16241D;
+  --forest-800: #223429;
+  --stone-100: #EEEBE3;
+  --stone-50:  #F7F5F0;
+  --brass-500: #B8922F;
+  --brass-400: #CBA646;
+  --clay-600:  #7A4B2E;
+  --ink-900:   #1A1D1A;
+  --ink-600:   #4A4F4A;
+  --white:     #FFFFFF;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Work Sans", "Segoe UI", Arial, sans-serif;
+
+  --max-width: 1180px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--stone-50);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Encabezado ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(247, 245, 240, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(26, 29, 26, 0.08);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--forest-950);
+}
+
+.brand span { color: var(--brass-500); }
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.main-nav a {
+  font-size: 0.95rem;
+  color: var(--ink-600);
+  transition: color 0.15s ease;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible { color: var(--forest-950); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border-radius: 3px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-ghost {
+  color: var(--forest-950);
+  border-color: rgba(26, 29, 26, 0.18);
+}
+
+.btn-ghost:hover, .btn-ghost:focus-visible {
+  border-color: var(--forest-950);
+}
+
+.btn-brass {
+  background: var(--brass-500);
+  color: var(--forest-950);
+}
+
+.btn-brass:hover, .btn-brass:focus-visible {
+  background: var(--brass-400);
+}
+
+.btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--brass-500);
+  outline-offset: 2px;
+}
+
+
+
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--forest-950);
+  color: var(--stone-50);
+  padding: 72px 0 96px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero .wrap {
+  display: grid;
+  grid-template-columns: 1.05fr 0.85fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-copy {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: reveal 0.7s ease forwards;
+}
+
+@keyframes reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--brass-400);
+  margin: 0 0 18px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  line-height: 1.12;
+  margin: 0 0 20px;
+  max-width: 14ch;
+}
+
+.hero-lead {
+  font-size: 1.05rem;
+  color: rgba(247, 245, 240, 0.78);
+  max-width: 42ch;
+  margin: 0 0 36px;
+}
+
+.search-panel {
+  background: var(--stone-50);
+  border-radius: 4px;
+  padding: 22px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.search-panel form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-600);
+  margin-bottom: 6px;
+}
+
+.field select,
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(26, 29, 26, 0.18);
+  border-radius: 3px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink-900);
+  background: var(--white);
+}
+
+.search-panel .btn-brass {
+  align-self: end;
+  height: 42px;
+  padding: 0 24px;
+}
+
+.hero-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-art svg { width: 100%; height: auto; max-width: 380px; }
+
+/* ---------- Secciones ---------- */
+.section {
+  padding: 84px 0;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 42px;
+  border-bottom: 1px solid rgba(26, 29, 26, 0.12);
+  padding-bottom: 20px;
+}
+
+.section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  margin: 0;
+  color: var(--forest-950);
+}
+
+.section-head p {
+  margin: 0;
+  color: var(--ink-600);
+  max-width: 34ch;
+}
+
+/* ---------- Propiedades destacadas ---------- */
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(26, 29, 26, 0.12);
+  border: 1px solid rgba(26, 29, 26, 0.12);
+}
+
+.listing-card {
+  background: var(--stone-50);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background 0.15s ease;
+}
+
+.listing-card:hover { background: var(--white); }
+
+.listing-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--brass-500);
+}
+
+.listing-card h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin: 0;
+  color: var(--forest-950);
+}
+
+.listing-meta {
+  font-size: 0.85rem;
+  color: var(--ink-600);
+  margin: 0;
+}
+
+.listing-price {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--clay-600);
+}
+
+.listing-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: var(--forest-800);
+  background: rgba(184, 146, 47, 0.16);
+  padding: 4px 10px;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.empty-state {
+  padding: 48px 28px;
+  color: var(--ink-600);
+  border: 1px dashed rgba(26, 29, 26, 0.25);
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+/* ---------- Por qué Raíz ---------- */
+.features {
+  background: var(--stone-100);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.feature h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--forest-950);
+  margin: 0 0 10px;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--ink-600);
+  font-size: 0.95rem;
+}
+
+.feature-index {
+  font-family: var(--font-display);
+  color: var(--brass-500);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+/* ---------- CTA de cierre ---------- */
+.cta-band {
+  background: var(--forest-950);
+  color: var(--stone-50);
+  padding: 64px 0;
+  text-align: center;
+}
+
+.cta-band h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  margin: 0 0 14px;
+}
+
+.cta-band p {
+  color: rgba(247, 245, 240, 0.75);
+  margin: 0 0 28px;
+}
+
+/* ---------- Pie ---------- */
+.site-footer {
+  background: var(--stone-100);
+  border-top: 1px solid rgba(26, 29, 26, 0.1);
+  padding: 40px 0;
+}
+
+.site-footer .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-note {
+  font-size: 0.85rem;
+  color: var(--ink-600);
+}
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-copy { animation: none; opacity: 1; transform: none; }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero-art { order: -1; max-width: 220px; margin: 0 auto; }
+  .listing-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+  .search-panel form { grid-template-columns: 1fr 1fr; }
+  .search-panel .btn-brass { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .site-header .wrap {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    row-gap: 12px;
+  }
+  .main-nav { order: 3; width: 100%; gap: 20px; overflow-x: auto; }
+  .hero { padding: 48px 0 64px; }
+  .search-panel form { grid-template-columns: 1fr; }
+  .listing-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .section { padding: 56px 0; }
+  .section-head { flex-direction: column; gap: 8px; }
+  .nav-actions .btn-ghost { display: none; }
+}

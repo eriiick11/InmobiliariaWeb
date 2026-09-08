@@ -1,0 +1,54 @@
+<%--
+  conexion.jspf - Fragmento de conexion centralizada a MySQL (XAMPP)
+  Proyecto: InmobiliariaWeb
+  Se incluye de forma ESTATICA en cada pagina que necesite la base de datos:
+  <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
+--%>
+<%@ page import="java.sql.*" %>
+<%!
+    /* ============ PARAMETROS DE CONEXION ============
+       Solo se modifican estas cuatro constantes para llevar el
+       proyecto a otro computador o servidor. XAMPP por defecto:
+       usuario root, sin clave, puerto 3306. */
+    public static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
+    public static final String DB_URL =
+        "jdbc:mysql://localhost:3306/inmobiliaria_web"
+        + "?useSSL=false&allowPublicKeyRetrieval=true"
+        + "&serverTimezone=America/Bogota&characterEncoding=UTF-8";
+    public static final String DB_USUARIO = "root";
+    public static final String DB_CLAVE = "";
+
+    /**
+     * Abre y devuelve una conexion nueva con la base de datos.
+     * Quien la llama es responsable de cerrarla (preferiblemente con cerrar()).
+     */
+    public Connection abrirConexion() throws SQLException {
+        try {
+            Class.forName(DB_DRIVER);
+        } catch (ClassNotFoundException ex) {
+            throw new SQLException(
+                "No se encontro el driver de MySQL. Agregue mysql-connector-j-8.x.jar "
+                + "a la carpeta WEB-INF/lib del proyecto.", ex);
+        }
+        return DriverManager.getConnection(DB_URL, DB_USUARIO, DB_CLAVE);
+    }
+
+    /**
+     * Cierra en orden inverso cualquier recurso JDBC (ResultSet, Statement,
+     * Connection) sin obligar a escribir try/catch en cada pagina.
+     */
+    public void cerrar(AutoCloseable... recursos) {
+        for (int i = recursos.length - 1; i >= 0; i--) {
+            if (recursos[i] != null) {
+                try { recursos[i].close(); } catch (Exception ignorada) { }
+            }
+        }
+    }
+
+    /** Deshace la transaccion en curso sin propagar errores secundarios. */
+    public void deshacer(Connection con) {
+        if (con != null) {
+            try { con.rollback(); } catch (SQLException ignorada) { }
+        }
+    }
+%>
