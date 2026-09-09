@@ -147,8 +147,30 @@
 <%
     } else if ("CLIENTE".equals(rolSesion)) {
 %>
-    <p class="text-muted">Agendar visita y marcar como favorito se habilitan en los
-       siguientes pasos del proyecto (citas y favoritos).</p>
+    <div class="search-panel" style="max-width:420px;margin-top:16px">
+      <h4 style="font-family:var(--font-display);font-size:1.05rem;margin:0 0 12px">Agendar visita</h4>
+<%
+        String msgCita = request.getParameter("msg");
+        String errCita = request.getParameter("err");
+        if (msgCita != null) { %>
+      <p class="listing-tag" style="background:rgba(122,75,46,0.14);margin-bottom:10px"><%= esc(msgCita) %></p>
+<%      }
+        if (errCita != null) { %>
+      <p class="listing-tag" style="background:rgba(180,40,40,0.14);color:#7a1f1f;margin-bottom:10px"><%= esc(errCita) %></p>
+<%      } %>
+      <form method="post" action="<%= ctx %>/cliente/agendar_cita.jsp">
+        <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
+        <div class="field" style="margin-bottom:12px">
+          <label for="fechaHora">Fecha y hora de la visita</label>
+          <input type="datetime-local" id="fechaHora" name="fecha_hora" required>
+        </div>
+        <button type="submit" class="btn btn-brass">Solicitar cita</button>
+      </form>
+      <p class="listing-meta" style="margin-top:10px">
+        La inmobiliaria revisará tu solicitud y la aprobará o rechazará.
+        No se pueden agendar dos visitas a la misma propiedad en el mismo horario.
+      </p>
+    </div>
 <% } %>
 <% } %>
   </div>
