@@ -22,7 +22,7 @@
         <a href="<%= ctx %>/cliente/panel.jsp">Mi panel</a>
       <% } %>
       <% if ("INMOBILIARIA".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
-        <a href="<%= ctx %>/inmobiliaria/panel.jsp">Mis propiedades</a>
+            <a href="<%= ctx %>/inmobiliaria/propiedades.jsp">Mis propiedades</a>
       <% } %>
       <% if ("ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/admin/panel.jsp">Administración</a>
