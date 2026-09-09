@@ -1,0 +1,109 @@
+/* ============================================================
+   auth.css — Estilos para login.jsp y registro.jsp
+   Reutiliza las variables definidas en style.css
+   ============================================================ */
+
+.auth-page {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--forest-950);
+  font-family: var(--font-body);
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--stone-50);
+  border-radius: 4px;
+  padding: 40px 36px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.auth-card .brand {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--forest-950);
+  margin-bottom: 24px;
+}
+
+.auth-card .brand span { color: var(--brass-500); }
+
+.auth-card h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--forest-950);
+  margin: 0 0 24px;
+}
+
+.auth-card .field {
+  margin-bottom: 16px;
+}
+
+.auth-card .field label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--ink-600);
+  margin-bottom: 6px;
+}
+
+.auth-card .field input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid rgba(26, 29, 26, 0.18);
+  border-radius: 3px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-900);
+  background: var(--white);
+}
+
+.auth-card .field input:focus-visible {
+  outline: 2px solid var(--brass-500);
+  outline-offset: 1px;
+}
+
+.auth-card .btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 1rem;
+}
+
+.auth-msg {
+  background: rgba(122, 75, 46, 0.14);
+  color: var(--clay-600);
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-size: 0.88rem;
+  margin: 0 0 18px;
+}
+
+.auth-error {
+  background: rgba(180, 40, 40, 0.12);
+  color: #7a1f1f;
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-size: 0.88rem;
+  margin: 0 0 18px;
+}
+
+.auth-alt {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ink-600);
+  margin: 20px 0 0;
+}
+
+.auth-alt a {
+  color: var(--clay-600);
+  font-weight: 500;
+}
+
+.auth-alt a:hover { text-decoration: underline; }

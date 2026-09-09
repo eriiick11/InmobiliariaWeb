@@ -171,6 +171,25 @@
         No se pueden agendar dos visitas a la misma propiedad en el mismo horario.
       </p>
     </div>
+
+    <div class="search-panel" style="max-width:420px;margin-top:16px">
+      <h4 style="font-family:var(--font-display);font-size:1.05rem;margin:0 0 12px">Solicitar compra o arriendo</h4>
+      <form method="post" action="<%= ctx %>/cliente/solicitar.jsp">
+        <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
+        <div class="field" style="margin-bottom:12px">
+          <label for="tipoSolicitud">Tipo de trámite</label>
+          <select id="tipoSolicitud" name="tipo" required>
+            <option value="COMPRA">Compra</option>
+            <option value="ARRIENDO">Arriendo</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-brass">Enviar solicitud</button>
+      </form>
+      <p class="listing-meta" style="margin-top:10px">
+        Después de radicar la solicitud podrás subir tus documentos y ver el estado
+        del trámite en <a href="<%= ctx %>/cliente/mis_solicitudes.jsp">Mis solicitudes</a>.
+      </p>
+    </div>
 <% } %>
 <% } %>
   </div>

@@ -17,16 +17,20 @@
 <body class="panel-body">
 <div class="panel-shell">
   <aside class="panel-sidebar">
-    <a class="brand" href="<%= ctx %>/inicio.jsp">Ra<span>í</span>z</a>
+    <a class="brand" href="<%= ctx %>/index.jsp">Ra<span>í</span>z</a>
     <nav class="panel-nav">
+      <a href="<%= ctx %>/index.jsp">Página principal</a>
+      <a href="<%= ctx %>/propiedades/listado.jsp">Buscar propiedades</a>
       <a href="<%= ctx %>/perfil.jsp">Mi perfil</a>
       <% if ("CLIENTE".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/cliente/panel.jsp">Mi panel</a>
         <a href="<%= ctx %>/cliente/mis_citas.jsp">Mis citas</a>
+        <a href="<%= ctx %>/cliente/mis_solicitudes.jsp">Mis solicitudes</a>
       <% } %>
       <% if ("INMOBILIARIA".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/inmobiliaria/propiedades.jsp">Mis propiedades</a>
         <a href="<%= ctx %>/inmobiliaria/citas.jsp">Citas recibidas</a>
+        <a href="<%= ctx %>/inmobiliaria/solicitudes.jsp">Solicitudes recibidas</a>
       <% } %>
       <% if ("ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/admin/panel.jsp">Administración</a>

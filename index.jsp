@@ -27,6 +27,11 @@
     Statement st = null;
     ResultSet rs = null;
 
+    // ---- Sesion opcional: no se redirige, solo se lee si existe ----
+    Integer idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
+    String nombreSesion = (String) session.getAttribute("nombre");
+    String rolSesion = (String) session.getAttribute("rol");
+
     // ---- Propiedades destacadas: últimas disponibles, con ciudad/tipo/inmobiliaria ----
     final String SQL_DESTACADAS =
         "SELECT p.id_propiedad, p.titulo, p.precio, p.area, p.direccion, " +
@@ -61,12 +66,18 @@
     <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
     <nav class="main-nav">
       <a href="index.jsp">Inicio</a>
-      <a href="#destacadas">Propiedades</a>
+      <a href="propiedades/listado.jsp">Propiedades</a>
       <a href="#nosotros">Nosotros</a>
     </nav>
     <div class="nav-actions">
+<% if (idUsuarioSesion == null) { %>
       <a class="btn btn-ghost" href="login.jsp">Iniciar sesión</a>
       <a class="btn btn-brass" href="registro.jsp">Crear cuenta</a>
+<% } else { %>
+      <span class="small" style="color:var(--ink-600);margin-right:8px">Hola, <%= nombreSesion %></span>
+      <a class="btn btn-ghost" href="inicio.jsp">Mi panel</a>
+      <a class="btn btn-brass" href="logout.jsp">Cerrar sesión</a>
+<% } %>
     </div>
   </div>
 </header>
@@ -159,7 +170,7 @@
             hayDestacadas = true;
             String tipo = rs.getString("tipo");
 %>
-      <article class="listing-card">
+      <a class="listing-card" href="propiedades/ficha.jsp?id=<%= rs.getInt("id_propiedad") %>">
         <%= iconoTipo(tipo) %>
         <div>
           <span class="listing-tag"><%= tipo %></span>
@@ -179,7 +190,7 @@
         <p class="listing-price">
           $ <%= String.format("%,.0f", rs.getDouble("precio")) %>
         </p>
-      </article>
+      </a>
 <%
         }
         if (!hayDestacadas) {
@@ -191,6 +202,10 @@
         }
 %>
     </div>
+
+    <p style="text-align:center;margin-top:32px">
+      <a class="btn btn-ghost" href="propiedades/listado.jsp">Ver todo el catálogo</a>
+    </p>
   </div>
 </section>
 
@@ -220,9 +235,15 @@
 
 <section class="cta-band">
   <div class="wrap">
+<% if (idUsuarioSesion == null) { %>
     <h2>¿Listo para encontrar tu próximo lugar?</h2>
     <p>Crea tu cuenta gratis y guarda tus propiedades favoritas.</p>
     <a class="btn btn-brass" href="registro.jsp">Crear cuenta</a>
+<% } else { %>
+    <h2>Sigue explorando el catálogo</h2>
+    <p>Encuentra tu próxima propiedad y agenda una visita.</p>
+    <a class="btn btn-brass" href="propiedades/listado.jsp">Ver propiedades</a>
+<% } %>
   </div>
 </section>
 
