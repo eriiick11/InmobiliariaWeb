@@ -18,11 +18,12 @@
   <aside class="panel-sidebar">
     <a class="brand" href="<%= ctx %>/inicio.jsp">Ra<span>í</span>z</a>
     <nav class="panel-nav">
+      <a href="<%= ctx %>/perfil.jsp">Mi perfil</a>
       <% if ("CLIENTE".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/cliente/panel.jsp">Mi panel</a>
       <% } %>
       <% if ("INMOBILIARIA".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
-            <a href="<%= ctx %>/inmobiliaria/propiedades.jsp">Mis propiedades</a>
+        <a href="<%= ctx %>/inmobiliaria/propiedades.jsp">Mis propiedades</a>
       <% } %>
       <% if ("ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/admin/panel.jsp">Administración</a>
