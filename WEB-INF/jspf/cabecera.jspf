@@ -1,0 +1,37 @@
+<%--
+  cabecera.jspf - Encabezado + sidebar de los paneles internos.
+  Requiere que la pagina ya haya incluido seguridad.jspf antes
+  (usa rolSesion, nombreSesion, ctx) y que declare "tituloPagina".
+--%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= tituloPagina %> | Raíz</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<%= ctx %>/css/style.css">
+<link rel="stylesheet" href="<%= ctx %>/css/panel.css">
+</head>
+<body class="panel-body">
+<div class="panel-shell">
+  <aside class="panel-sidebar">
+    <a class="brand" href="<%= ctx %>/inicio.jsp">Ra<span>í</span>z</a>
+    <nav class="panel-nav">
+      <% if ("CLIENTE".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
+        <a href="<%= ctx %>/cliente/panel.jsp">Mi panel</a>
+      <% } %>
+      <% if ("INMOBILIARIA".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
+        <a href="<%= ctx %>/inmobiliaria/panel.jsp">Mis propiedades</a>
+      <% } %>
+      <% if ("ADMINISTRADOR".equals(rolSesion)) { %>
+        <a href="<%= ctx %>/admin/panel.jsp">Administración</a>
+      <% } %>
+    </nav>
+    <div class="panel-user">
+      <p><%= esc(nombreSesion) %></p>
+      <span class="badge"><%= rolSesion %></span>
+      <a href="<%= ctx %>/logout.jsp" class="panel-logout">Cerrar sesión</a>
+    </div>
+  </aside>
+  <main class="panel-main">
