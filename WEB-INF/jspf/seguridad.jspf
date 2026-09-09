@@ -30,8 +30,7 @@
         if (rolesSesion.contains(permitido)) { autorizado = true; break; }
     }
     if (!autorizado) {
-        response.sendRedirect(ctx + "/inicio.jsp?error="
-            + java.net.URLEncoder.encode("No tienes permisos para esa seccion.", "UTF-8"));
+        response.sendRedirect(ctx + "/acceso-denegado.jsp");
         return;
     }
 %>
