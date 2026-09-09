@@ -74,11 +74,10 @@
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="hero-eyebrow">Portal inmobiliario</p>
-      <h1>Un lugar para cada etapa de tu vida</h1>
+      <h1>Encuentra dónde establecerte en Santander</h1>
       <p class="hero-lead">
-        Raíz conecta a personas con inmobiliarias de confianza en Santander y el resto
-        del país. Busca, agenda una visita y da el siguiente paso sin salir de aquí.
+        Raíz conecta a personas con inmobiliarias de confianza en Bucaramanga y el resto
+        del departamento. Busca, agenda una visita y da el siguiente paso sin salir de aquí.
       </p>
 
       <div class="search-panel">
@@ -162,12 +161,21 @@
 %>
       <article class="listing-card">
         <%= iconoTipo(tipo) %>
-        <span class="listing-tag"><%= tipo %></span>
-        <h3><%= rs.getString("titulo") %></h3>
-        <p class="listing-meta">
-          <%= rs.getString("ciudad") %> · <%= rs.getString("direccion") %><br>
-          <%= rs.getDouble("area") %> m² · Publica <%= rs.getString("inmobiliaria") %>
-        </p>
+        <div>
+          <span class="listing-tag"><%= tipo %></span>
+          <h3><%= rs.getString("titulo") %></h3>
+          <p class="listing-address"><%= rs.getString("direccion") %>, <%= rs.getString("ciudad") %></p>
+        </div>
+        <dl class="listing-specs">
+          <div>
+            <dt>Área</dt>
+            <dd><%= rs.getDouble("area") %> m²</dd>
+          </div>
+          <div>
+            <dt>Publica</dt>
+            <dd><%= rs.getString("inmobiliaria") %></dd>
+          </div>
+        </dl>
         <p class="listing-price">
           $ <%= String.format("%,.0f", rs.getDouble("precio")) %>
         </p>
@@ -195,18 +203,15 @@
 
     <div class="feature-grid">
       <div class="feature">
-        <p class="feature-index">Para visitantes</p>
         <h3>Explora sin registrarte</h3>
         <p>Consulta el catálogo completo y el detalle de cada inmueble antes de crear tu cuenta.</p>
       </div>
       <div class="feature">
-        <p class="feature-index">Para clientes</p>
-        <h3>Agenda y da seguimiento</h3>
-        <p>Solicita visitas, radica documentos y consulta el estado de tus trámites desde tu panel.</p>
+        <h3>Agenda y da seguimiento a tus trámites</h3>
+        <p>Solicita visitas, radica documentos y consulta el estado de tus solicitudes desde tu panel de cliente.</p>
       </div>
       <div class="feature">
-        <p class="feature-index">Para inmobiliarias</p>
-        <h3>Administra tu catálogo</h3>
+        <h3>Administra tu catálogo como inmobiliaria</h3>
         <p>Publica propiedades, gestiona la galería de imágenes y responde solicitudes en un solo lugar.</p>
       </div>
     </div>

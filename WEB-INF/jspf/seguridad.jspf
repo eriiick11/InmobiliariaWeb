@@ -1,0 +1,37 @@
+<%--
+  seguridad.jspf - Control de acceso por sesion y por rol (JSP puro, sin Filter).
+  Cada pagina protegida declara ANTES del include el arreglo con los roles
+  autorizados y luego incluye este fragmento:
+
+  <% String[] rolesPermitidos = {"CLIENTE", "ADMINISTRADOR"}; %>
+  <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
+
+  Como el include es estatico, rolesPermitidos es visible aqui.
+--%>
+<%@ page import="java.util.List" %>
+<%
+    Integer idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
+    String nombreSesion = (String) session.getAttribute("nombre");
+    String rolSesion = (String) session.getAttribute("rol");
+    @SuppressWarnings("unchecked")
+    List<String> rolesSesion = (List<String>) session.getAttribute("roles");
+    String ctx = request.getContextPath();
+
+    // 1) Sin sesion activa -> login
+    if (idUsuarioSesion == null || rolesSesion == null) {
+        response.sendRedirect(ctx + "/login.jsp?error="
+            + java.net.URLEncoder.encode("Debes iniciar sesion.", "UTF-8"));
+        return;
+    }
+
+    // 2) Ninguno de los roles del usuario esta autorizado en esta pagina
+    boolean autorizado = false;
+    for (String permitido : rolesPermitidos) {
+        if (rolesSesion.contains(permitido)) { autorizado = true; break; }
+    }
+    if (!autorizado) {
+        response.sendRedirect(ctx + "/inicio.jsp?error="
+            + java.net.URLEncoder.encode("No tienes permisos para esa seccion.", "UTF-8"));
+        return;
+    }
+%>
