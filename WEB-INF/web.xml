@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  web.xml - Descriptor de despliegue de InmobiliariaWeb.
+  Version 3.1 = Java EE 7, compatible con Tomcat 8.5 (javax.servlet).
+-->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>InmobiliariaWeb</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- La sesion caduca a los 30 minutos de inactividad -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- Fuerza UTF-8 en todas las paginas JSP, aunque alguna olvide el page directive -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+        </jsp-property-group>
+    </jsp-config>
+
+    <!-- Si alguien escribe una URL que no existe, o intenta entrar sin permiso -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/acceso-denegado.jsp</location>
+    </error-page>
+
+</web-app>
