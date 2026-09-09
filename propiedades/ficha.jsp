@@ -146,6 +146,28 @@
        agendar una visita y guardarla en tus favoritos.</p>
 <%
     } else if ("CLIENTE".equals(rolSesion)) {
+        boolean esFavorito = false;
+        try {
+            ps = con.prepareStatement(
+                "SELECT 1 FROM favorito WHERE id_usuario = ? AND id_propiedad = ?");
+            ps.setInt(1, idUsuarioSesion);
+            ps.setInt(2, idPropiedad);
+            rs = ps.executeQuery();
+            esFavorito = rs.next();
+            cerrar(rs, ps);
+        } catch (SQLException ex) { /* si falla, se asume que no es favorito */ }
+%>
+    <form method="post" action="<%= ctx %>/cliente/toggle_favorito.jsp" style="margin-top:16px">
+      <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
+      <input type="hidden" name="accion" value="<%= esFavorito ? "quitar" : "agregar" %>">
+      <button type="submit" class="btn <%= esFavorito ? "btn-ghost" : "btn-brass" %>">
+        <%= esFavorito ? "♥ Quitar de favoritos" : "♡ Guardar en favoritos" %>
+      </button>
+    </form>
+<%
+    } %>
+<%
+    if ("CLIENTE".equals(rolSesion)) {
 %>
     <div class="search-panel" style="max-width:420px;margin-top:16px">
       <h4 style="font-family:var(--font-display);font-size:1.05rem;margin:0 0 12px">Agendar visita</h4>

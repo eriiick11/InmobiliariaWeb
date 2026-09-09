@@ -26,6 +26,7 @@
         <a href="<%= ctx %>/cliente/panel.jsp">Mi panel</a>
         <a href="<%= ctx %>/cliente/mis_citas.jsp">Mis citas</a>
         <a href="<%= ctx %>/cliente/mis_solicitudes.jsp">Mis solicitudes</a>
+        <a href="<%= ctx %>/cliente/mis_favoritos.jsp">Mis favoritos</a>
       <% } %>
       <% if ("INMOBILIARIA".equals(rolSesion) || "ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/inmobiliaria/propiedades.jsp">Mis propiedades</a>
