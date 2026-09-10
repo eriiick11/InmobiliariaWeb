@@ -45,8 +45,7 @@
         } else {
             ps = con.prepareStatement(
                 "SELECT s.id_solicitud, s.tipo, s.estado, s.fecha_solicitud, "
-              + "       p.titulo, u.correo, pf.nombres, pf.apellidos, "
-              + "       (SELECT COUNT(*) FROM documento_solicitud d WHERE d.id_solicitud = s.id_solicitud) AS n_docs "
+              + "       p.titulo, u.correo, pf.nombres, pf.apellidos "
               + "FROM solicitud s "
               + "INNER JOIN propiedad p ON p.id_propiedad = s.id_propiedad "
               + "INNER JOIN usuario u ON u.id_usuario = s.id_cliente "
@@ -70,11 +69,34 @@
         <p class="text-muted small mb-1">
           <%= esc(rs.getString("nombres")) %> <%= esc(rs.getString("apellidos")) %>
           (<%= esc(rs.getString("correo")) %>) · <%= rs.getTimestamp("fecha_solicitud") %>
-          · <%= rs.getInt("n_docs") %> documento(s)
         </p>
       </div>
       <span class="badge text-bg-<%= colorEstado %>"><%= estado %></span>
     </div>
+
+    <h6 class="mt-3 mb-1">Documentos radicados</h6>
+    <ul class="list-group list-group-flush mb-2">
+<%
+        PreparedStatement psDoc = con.prepareStatement(
+            "SELECT nombre_archivo, url_archivo, fecha_carga FROM documento_solicitud "
+          + "WHERE id_solicitud = ? ORDER BY fecha_carga");
+        psDoc.setInt(1, idSolicitud);
+        ResultSet rsDoc = psDoc.executeQuery();
+        boolean hayDocs = false;
+        while (rsDoc.next()) {
+            hayDocs = true;
+%>
+      <li class="list-group-item px-0 py-1">
+        <a href="<%= esc(rsDoc.getString("url_archivo")) %>" target="_blank" rel="noopener">
+          <%= esc(rsDoc.getString("nombre_archivo")) %></a>
+        <span class="text-muted small"> — <%= rsDoc.getTimestamp("fecha_carga") %></span>
+      </li>
+<%      }
+        cerrar(rsDoc, psDoc);
+        if (!hayDocs) { %>
+      <li class="list-group-item px-0 py-1 text-muted small">El cliente todavía no ha subido documentos.</li>
+<%      } %>
+    </ul>
 <%          if ("PENDIENTE".equals(estado)) { %>
     <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_solicitud.jsp" class="d-inline mt-2">
       <input type="hidden" name="id_solicitud" value="<%= idSolicitud %>">

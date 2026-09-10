@@ -33,6 +33,9 @@
         <a href="<%= ctx %>/inmobiliaria/citas.jsp">Citas recibidas</a>
         <a href="<%= ctx %>/inmobiliaria/solicitudes.jsp">Solicitudes recibidas</a>
       <% } %>
+      <% if ("ADMINISTRADOR".equals(rolSesion) || "INMOBILIARIA".equals(rolSesion)) { %>
+        <a href="<%= ctx %>/reportes.jsp">Reportes</a>
+      <% } %>
       <% if ("ADMINISTRADOR".equals(rolSesion)) { %>
         <a href="<%= ctx %>/admin/panel.jsp">Administración</a>
       <% } %>
