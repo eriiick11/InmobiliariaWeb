@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <%--
   utilidades.jspf - Metodos auxiliares reutilizables en todo el proyecto.
   Se incluye siempre DESPUES de conexion.jspf.

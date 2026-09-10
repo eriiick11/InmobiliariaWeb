@@ -1,0 +1,16 @@
+Coloca aqui tus imagenes con estos nombres EXACTOS para que aparezcan
+automaticamente (si no existen, la pagina se ve bien igual, con un
+degradado de color en su lugar):
+
+  hero.jpg          -> fondo del hero de la landing (index.jsp)
+                       recomendado: 1920x1080 o mas, horizontal,
+                       una fachada, edificio o interior elegante.
+
+  auth.jpg          -> panel lateral de login.jsp y registro.jsp
+                       recomendado: 1200x1600, vertical, interior
+                       de una casa o apartamento bien iluminado.
+
+Las fotos de cada PROPIEDAD no van aqui: esas se cargan desde el
+panel de la inmobiliaria (tabla imagen_propiedad) y ya se muestran
+solas en la ficha de detalle y en las tarjetas destacadas de la
+landing si existen.

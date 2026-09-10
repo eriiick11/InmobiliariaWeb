@@ -15,19 +15,30 @@
 <link rel="stylesheet" href="css/auth.css">
 </head>
 <body class="auth-page">
-<main class="auth-card">
+
+<div class="auth-visual" aria-hidden="true">
   <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
-  <h1>Inicia sesión</h1>
-  <% if (msg != null) { %><p class="auth-msg"><%= msg %></p><% } %>
-  <% if (error != null) { %><p class="auth-error"><%= error %></p><% } %>
-  <form method="post" action="acceso.jsp">
-    <div class="field"><label for="username">Usuario</label>
-      <input type="text" id="username" name="username" required autofocus></div>
-    <div class="field"><label for="clave">Clave</label>
-      <input type="password" id="clave" name="clave" required></div>
-    <button type="submit" class="btn btn-brass">Ingresar</button>
-  </form>
-  <p class="auth-alt">¿No tienes cuenta? <a href="registro.jsp">Regístrate</a></p>
-</main>
+  <blockquote>&ldquo;Un lugar para establecerte empieza por encontrarlo bien.&rdquo;</blockquote>
+  <p class="auth-visual-note">Propiedades verificadas en Bucaramanga y Santander.</p>
+</div>
+
+<div class="auth-form-side">
+  <main class="auth-card">
+    <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
+    <h1>Inicia sesión</h1>
+    <p class="auth-sub">Entra a tu panel para seguir donde ibas.</p>
+    <% if (msg != null) { %><p class="auth-msg"><%= msg %></p><% } %>
+    <% if (error != null) { %><p class="auth-error"><%= error %></p><% } %>
+    <form method="post" action="acceso.jsp">
+      <div class="field"><label for="username">Usuario</label>
+        <input type="text" id="username" name="username" required autofocus></div>
+      <div class="field"><label for="clave">Clave</label>
+        <input type="password" id="clave" name="clave" required></div>
+      <button type="submit" class="btn btn-brass">Ingresar</button>
+    </form>
+    <p class="auth-alt">¿No tienes cuenta? <a href="registro.jsp">Regístrate</a></p>
+  </main>
+</div>
+
 </body>
 </html>

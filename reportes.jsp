@@ -81,10 +81,15 @@
     Connection con = null; Statement st = null; ResultSet rs = null;
 %>
 
-<h1>Reportes</h1>
-<p>Las 5 consultas SQL obligatorias del parcial (2 INNER JOIN con 3+ tablas,
-   1 relación N:M, 1 LEFT JOIN, 1 GROUP BY + HAVING), más las 2 variantes,
-   ejecutadas en vivo contra la base de datos.</p>
+<div class="page-header">
+  <div class="page-icon"><i class="bi bi-bar-chart"></i></div>
+  <div>
+    <h1>Reportes</h1>
+    <p>Las 5 consultas SQL obligatorias del parcial (2 INNER JOIN con 3+ tablas,
+       1 relación N:M, 1 LEFT JOIN, 1 GROUP BY + HAVING), más las 2 variantes,
+       ejecutadas en vivo contra la base de datos.</p>
+  </div>
+</div>
 
 <ul class="nav nav-pills mb-3 flex-wrap">
   <li class="nav-item"><a class="nav-link <%= r==1?"active":"" %>" href="<%= ctx %>/reportes.jsp?r=1">1. Propiedades (ciudad/tipo/inmobiliaria)</a></li>

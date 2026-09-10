@@ -1,30 +1,72 @@
 /* ============================================================
    auth.css — Estilos para login.jsp y registro.jsp
+   Pantalla dividida: panel de imagen + formulario.
    Reutiliza las variables definidas en style.css
    ============================================================ */
 
 .auth-page {
   margin: 0;
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: var(--font-body);
+}
+
+/* ---------- Panel de imagen (izquierda) ---------- */
+.auth-visual {
+  position: relative;
+  background-color: var(--forest-950);
+  background-image:
+    linear-gradient(165deg, rgba(16, 26, 20, 0.88), rgba(22, 36, 29, 0.62)),
+    url("../img/auth.jpg");
+  background-size: cover;
+  background-position: center;
+  color: var(--stone-50);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 56px;
+}
+
+.auth-visual .brand { color: var(--stone-50); font-size: 1.5rem; }
+.auth-visual .brand span { color: var(--brass-400); }
+
+.auth-visual blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.35;
+  max-width: 24ch;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: reveal 0.7s ease 0.15s forwards;
+}
+
+.auth-visual .auth-visual-note {
+  font-size: 0.88rem;
+  color: rgba(247, 245, 240, 0.7);
+}
+
+/* ---------- Panel de formulario (derecha) ---------- */
+.auth-form-side {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--forest-950);
-  font-family: var(--font-body);
+  background: var(--stone-50);
   padding: 24px;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
-  background: var(--stone-50);
-  border-radius: 4px;
-  padding: 40px 36px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  max-width: 400px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: reveal 0.55s ease forwards;
 }
 
 .auth-card .brand {
-  display: block;
+  display: none; /* ya aparece en el panel de imagen; en movil se muestra, ver media query */
   font-family: var(--font-display);
   font-size: 1.4rem;
   font-weight: 600;
@@ -37,9 +79,15 @@
 .auth-card h1 {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--forest-950);
-  margin: 0 0 24px;
+  margin: 0 0 8px;
+}
+
+.auth-card .auth-sub {
+  color: var(--ink-600);
+  font-size: 0.92rem;
+  margin: 0 0 26px;
 }
 
 .auth-card .field {
@@ -57,16 +105,18 @@
   width: 100%;
   padding: 11px 12px;
   border: 1px solid rgba(26, 29, 26, 0.18);
-  border-radius: 3px;
+  border-radius: 5px;
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--ink-900);
   background: var(--white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.auth-card .field input:focus-visible {
-  outline: 2px solid var(--brass-500);
-  outline-offset: 1px;
+.auth-card .field input:focus-visible, .auth-card .field input:focus {
+  outline: none;
+  border-color: var(--brass-500);
+  box-shadow: 0 0 0 3px rgba(184, 146, 47, 0.18);
 }
 
 .auth-card .btn {
@@ -80,16 +130,16 @@
   background: rgba(122, 75, 46, 0.14);
   color: var(--clay-600);
   padding: 10px 14px;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 0.88rem;
   margin: 0 0 18px;
 }
 
 .auth-error {
-  background: rgba(180, 40, 40, 0.12);
-  color: #7a1f1f;
+  background: rgba(138, 59, 46, 0.12);
+  color: #6b2a1e;
   padding: 10px 14px;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 0.88rem;
   margin: 0 0 18px;
 }
@@ -98,7 +148,7 @@
   text-align: center;
   font-size: 0.88rem;
   color: var(--ink-600);
-  margin: 20px 0 0;
+  margin: 22px 0 0;
 }
 
 .auth-alt a {
@@ -107,3 +157,15 @@
 }
 
 .auth-alt a:hover { text-decoration: underline; }
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .auth-visual blockquote, .auth-card { animation: none; opacity: 1; transform: none; }
+}
+
+/* ---------- Responsivo: sin panel de imagen en pantallas chicas ---------- */
+@media (max-width: 900px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-visual { display: none; }
+  .auth-card .brand { display: block; }
+}

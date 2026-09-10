@@ -31,10 +31,10 @@
         ps = con.prepareStatement("SELECT id_inmobiliaria FROM propiedad WHERE id_propiedad = ?");
         ps.setInt(1, idPropiedad);
         rs = ps.executeQuery();
-        boolean esDueño = rs.next() && rs.getInt("id_inmobiliaria") == idInmobiliaria;
+        boolean esDueÃ±o = rs.next() && rs.getInt("id_inmobiliaria") == idInmobiliaria;
         cerrar(rs, ps);
 
-        if (!esDueño) {
+        if (!esDueÃ±o) {
             response.sendRedirect(ctx + "/acceso-denegado.jsp");
             return;
         }

@@ -1,33 +1,232 @@
+/* ============================================================
+   panel.css — Shell de los paneles internos + reskin de Bootstrap
+   para que toda la app (cliente/inmobiliaria/admin/reportes) hable
+   el mismo idioma visual que la landing, sin tocar cada JSP.
+   ============================================================ */
+
 .panel-body { margin: 0; background: var(--stone-50); font-family: var(--font-body); color: var(--ink-900); }
 .panel-shell { display: flex; min-height: 100vh; }
 
+/* ---------- Sidebar ---------- */
 .panel-sidebar {
-  width: 220px; flex-shrink: 0;
-  background: var(--forest-950); color: var(--stone-50);
-  display: flex; flex-direction: column; padding: 28px 20px;
+  width: 232px; flex-shrink: 0;
+  background: linear-gradient(185deg, var(--forest-950), var(--forest-900));
+  color: var(--stone-50);
+  display: flex; flex-direction: column; padding: 28px 18px;
 }
-.panel-sidebar .brand { color: var(--stone-50); margin-bottom: 36px; }
+.panel-sidebar .brand { color: var(--stone-50); margin-bottom: 8px; font-size: 1.35rem; }
 .panel-sidebar .brand span { color: var(--brass-400); }
 
-.panel-nav { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.panel-nav a { color: rgba(247,245,240,.78); font-size: .95rem; padding: 9px 10px; border-radius: 3px; }
-.panel-nav a:hover, .panel-nav a:focus-visible { background: rgba(255,255,255,.08); color: var(--stone-50); }
-
-.panel-user { border-top: 1px solid rgba(255,255,255,.15); padding-top: 16px; font-size: .85rem; }
-.panel-user p { margin: 0 0 6px; }
-.panel-user .badge {
-  display: inline-block; background: var(--brass-500); color: var(--forest-950);
-  font-size: .7rem; padding: 2px 8px; border-radius: 2px; margin-bottom: 10px;
+.panel-nav { display: flex; flex-direction: column; gap: 3px; flex: 1; margin-top: 28px; }
+.panel-nav a {
+  display: flex; align-items: center; gap: 10px;
+  color: rgba(247,245,240,.75); font-size: .93rem; padding: 10px 12px;
+  border-radius: 5px; position: relative; padding-left: 16px;
+  border-left: 2px solid transparent;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.panel-logout { display: block; color: var(--stone-50); opacity: .75; margin-top: 8px; }
+.panel-nav a i { font-size: 1rem; width: 18px; text-align: center; opacity: .85; }
+.panel-nav a:hover, .panel-nav a:focus-visible {
+  background: rgba(255,255,255,.07); color: var(--stone-50);
+  border-left-color: var(--brass-400);
+}
 
-.panel-main { flex: 1; padding: 40px 48px; max-width: 900px; }
-.panel-main h1 { font-family: var(--font-display); font-weight: 500; margin-top: 0; }
+.panel-user { border-top: 1px solid rgba(255,255,255,.14); padding-top: 16px; font-size: .85rem; }
+.panel-user p { margin: 0 0 8px; font-weight: 500; }
+.panel-user .badge {
+  display: inline-block; background: linear-gradient(155deg, var(--brass-400), var(--brass-500));
+  color: var(--forest-950); font-weight: 600;
+  font-size: .68rem; padding: 3px 9px; border-radius: 3px; margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.panel-logout { display: block; color: var(--stone-50); opacity: .7; margin-top: 10px; transition: opacity .15s ease; }
+.panel-logout:hover { opacity: 1; }
 
+.panel-main {
+  flex: 1; padding: 42px 48px; max-width: 1100px;
+  animation: panelReveal .45s ease both;
+}
+.panel-main h1 { font-family: var(--font-display); font-weight: 500; margin-top: 0; color: var(--forest-950); }
+.panel-main h3 { font-family: var(--font-display); font-weight: 500; color: var(--forest-950); }
+
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Reskin de componentes Bootstrap (aplica a todos los paneles)
+   ============================================================ */
+
+/* ---------- Botones ---------- */
+.panel-main .btn, .auth-page .btn {
+  border-radius: 5px;
+  font-weight: 500;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.panel-main .btn-warning {
+  background: linear-gradient(155deg, var(--brass-400), var(--brass-500));
+  border-color: var(--brass-500);
+  color: var(--forest-950);
+}
+.panel-main .btn-warning:hover, .panel-main .btn-warning:focus-visible {
+  background: linear-gradient(155deg, var(--brass-300), var(--brass-400));
+  border-color: var(--brass-400);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(184, 146, 47, 0.32);
+  color: var(--forest-950);
+}
+
+.panel-main .btn-outline-dark {
+  color: var(--forest-950); border-color: rgba(22,36,29,.35);
+}
+.panel-main .btn-outline-dark:hover {
+  background: var(--forest-950); border-color: var(--forest-950); color: var(--stone-50);
+}
+
+.panel-main .btn-outline-success {
+  color: #2E5C3F; border-color: #2E5C3F;
+}
+.panel-main .btn-outline-success:hover { background: #2E5C3F; border-color: #2E5C3F; }
+
+.panel-main .btn-outline-danger {
+  color: #8A3B2E; border-color: #8A3B2E;
+}
+.panel-main .btn-outline-danger:hover { background: #8A3B2E; border-color: #8A3B2E; }
+
+.panel-main .btn-outline-secondary { color: var(--ink-600); border-color: rgba(22,36,29,.3); }
+.panel-main .btn-outline-secondary:hover { background: var(--ink-600); border-color: var(--ink-600); }
+
+/* ---------- Cards ---------- */
+.panel-main .card {
+  border: 1px solid rgba(22, 36, 29, 0.08);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+}
+.panel-main .card-header {
+  background: var(--stone-100);
+  border-bottom: 1px solid rgba(22, 36, 29, 0.08);
+  font-family: var(--font-display);
+  color: var(--forest-950);
+}
+.panel-main .card-title { font-family: var(--font-display); color: var(--forest-950); font-weight: 500; }
+
+/* Cards clickeables tipo dashboard (contienen un boton dentro) reciben hover-lift */
+.panel-main .card:has(.card-body > .btn):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(22, 36, 29, 0.14);
+}
+.panel-main .card:has(.card-body > .btn) { transition: transform .2s ease, box-shadow .2s ease; }
+
+/* ---------- Tablas ---------- */
+.panel-main .table { --bs-table-bg: transparent; }
+.panel-main .table-dark {
+  --bs-table-bg: var(--forest-950);
+  --bs-table-color: var(--stone-50);
+}
+.panel-main .table-hover > tbody > tr:hover > * {
+  --bs-table-hover-bg: rgba(184, 146, 47, 0.09);
+}
+.panel-main .table td, .panel-main .table th { border-color: rgba(22, 36, 29, 0.08); }
+
+/* ---------- Badges (estados) ---------- */
+.panel-main .text-bg-success { background: #2E5C3F !important; color: var(--stone-50) !important; }
+.panel-main .text-bg-danger  { background: #8A3B2E !important; color: var(--stone-50) !important; }
+.panel-main .text-bg-secondary { background: var(--ink-600) !important; color: var(--stone-50) !important; }
+.panel-main .text-bg-info    { background: #45646B !important; color: var(--stone-50) !important; }
+.panel-main .text-bg-warning { background: var(--brass-500) !important; color: var(--forest-950) !important; }
+
+/* ---------- Formularios ---------- */
+.panel-main .form-control, .panel-main .form-select {
+  border-color: rgba(22, 36, 29, 0.2);
+  border-radius: 5px;
+}
+.panel-main .form-control:focus, .panel-main .form-select:focus {
+  border-color: var(--brass-500);
+  box-shadow: 0 0 0 0.2rem rgba(184, 146, 47, 0.18);
+}
+.panel-main label, .panel-main .form-label { color: var(--ink-600); font-size: 0.88rem; }
+
+/* ---------- Alertas ---------- */
+.panel-main .alert-success {
+  background: rgba(46, 92, 63, 0.1); color: #1E3D2A; border-color: rgba(46, 92, 63, 0.25);
+}
+.panel-main .alert-danger {
+  background: rgba(138, 59, 46, 0.1); color: #5F2A20; border-color: rgba(138, 59, 46, 0.25);
+}
+
+/* ---------- Listas ---------- */
+.panel-main .list-group-item { border-color: rgba(22, 36, 29, 0.08); }
+
+/* ---------- Accesibilidad ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .panel-main { animation: none; }
+  .panel-main .btn, .panel-main .card { transition: none; }
+}
+
+/* ---------- Responsivo ---------- */
 @media (max-width: 760px) {
   .panel-shell { flex-direction: column; }
   .panel-sidebar { width: 100%; flex-direction: row; align-items: center; gap: 20px; padding: 16px 20px; }
-  .panel-nav { flex-direction: row; flex: none; }
+  .panel-nav { flex-direction: row; flex: none; margin-top: 0; overflow-x: auto; }
+  .panel-nav a { border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .panel-nav a:hover { border-left-color: transparent; border-bottom-color: var(--brass-400); }
   .panel-user { border-top: none; padding-top: 0; margin-left: auto; text-align: right; }
   .panel-main { padding: 28px 20px; }
+}
+
+/* ============================================================
+   Componentes de dashboard (pulido visual: pasos 12-14)
+   ============================================================ */
+
+/* ---------- Encabezado de pagina ---------- */
+.page-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+}
+.page-header .page-icon {
+  width: 46px; height: 46px; flex-shrink: 0;
+  border-radius: 12px;
+  background: linear-gradient(155deg, var(--forest-900), var(--forest-950));
+  color: var(--brass-400);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.page-header h1 { margin: 0; line-height: 1.15; }
+.page-header p { margin: 2px 0 0; color: var(--ink-600); font-size: .93rem; }
+
+/* ---------- Tarjetas de estadistica (dashboards) ---------- */
+.stat-card {
+  border: 1px solid rgba(22, 36, 29, 0.08);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  padding: 18px 20px;
+  display: flex; align-items: center; gap: 16px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(22, 36, 29, 0.12); }
+.stat-card .stat-icon {
+  width: 48px; height: 48px; flex-shrink: 0; border-radius: 10px;
+  background: rgba(184, 146, 47, 0.14);
+  color: var(--brass-500);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+}
+.stat-card.stat-alert .stat-icon { background: rgba(138, 59, 46, 0.12); color: #8A3B2E; }
+.stat-card .stat-value {
+  font-family: var(--font-display); font-weight: 600; font-size: 1.9rem;
+  color: var(--forest-950); line-height: 1;
+}
+.stat-card .stat-label { font-size: .82rem; color: var(--ink-600); margin-top: 4px; }
+
+/* ---------- Tarjetas de acceso rapido (dashboards) ---------- */
+.quick-card { border: 1px solid rgba(22, 36, 29, 0.08); border-radius: 12px; }
+.quick-card .card-body { display: flex; flex-direction: column; gap: 10px; }
+.quick-card .quick-icon {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: var(--stone-100); color: var(--forest-950);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; margin-bottom: 2px;
 }

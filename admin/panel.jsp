@@ -20,61 +20,81 @@
 %>
 <%@ include file="/WEB-INF/jspf/cabecera.jspf" %>
 
-  <h1 class="mb-1">Panel de administración</h1>
-  <p class="text-muted mb-4">Acceso total: usuarios y roles, catálogos del sistema y auditoría.</p>
+  <div class="page-header">
+    <div class="page-icon"><i class="bi bi-shield-lock"></i></div>
+    <div>
+      <h1>Panel de administración</h1>
+      <p>Acceso total: usuarios y roles, catálogos del sistema y auditoría.</p>
+    </div>
+  </div>
 
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-      <div class="card shadow-sm text-center py-3">
-        <div class="fs-3 fw-bold"><%= totalUsuarios %></div>
-        <div class="small text-muted">Usuarios registrados</div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-people"></i></div>
+        <div>
+          <div class="stat-value"><%= totalUsuarios %></div>
+          <div class="stat-label">Usuarios registrados</div>
+        </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card shadow-sm text-center py-3">
-        <div class="fs-3 fw-bold"><%= totalPropiedades %></div>
-        <div class="small text-muted">Propiedades activas</div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-buildings"></i></div>
+        <div>
+          <div class="stat-value"><%= totalPropiedades %></div>
+          <div class="stat-label">Propiedades activas</div>
+        </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card shadow-sm text-center py-3">
-        <div class="fs-3 fw-bold"><%= totalCitasPend %></div>
-        <div class="small text-muted">Citas pendientes</div>
+      <div class="stat-card <%= totalCitasPend > 0 ? "stat-alert" : "" %>">
+        <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+        <div>
+          <div class="stat-value"><%= totalCitasPend %></div>
+          <div class="stat-label">Citas pendientes</div>
+        </div>
       </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="card shadow-sm text-center py-3">
-        <div class="fs-3 fw-bold"><%= totalSolicitudesPend %></div>
-        <div class="small text-muted">Solicitudes pendientes</div>
+      <div class="stat-card <%= totalSolicitudesPend > 0 ? "stat-alert" : "" %>">
+        <div class="stat-icon"><i class="bi bi-file-earmark-text"></i></div>
+        <div>
+          <div class="stat-value"><%= totalSolicitudesPend %></div>
+          <div class="stat-label">Solicitudes pendientes</div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="row g-3">
     <div class="col-md-4">
-      <div class="card shadow-sm h-100">
+      <div class="card quick-card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title">Usuarios y roles</h5>
-          <p class="card-text small text-muted">Asigna o revoca roles, activa o inactiva cuentas.</p>
-          <a href="<%= ctx %>/admin/usuarios.jsp" class="btn btn-warning fw-bold btn-sm">Gestionar usuarios</a>
+          <div class="quick-icon"><i class="bi bi-person-gear"></i></div>
+          <h5 class="card-title mb-0">Usuarios y roles</h5>
+          <p class="card-text small text-muted mb-1">Asigna o revoca roles, activa o inactiva cuentas.</p>
+          <a href="<%= ctx %>/admin/usuarios.jsp" class="btn btn-warning fw-bold btn-sm align-self-start">Gestionar usuarios</a>
         </div>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card shadow-sm h-100">
+      <div class="card quick-card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title">Catálogos del sistema</h5>
-          <p class="card-text small text-muted">Ciudades, tipos de propiedad y características.</p>
-          <a href="<%= ctx %>/admin/catalogos.jsp" class="btn btn-warning fw-bold btn-sm">Gestionar catálogos</a>
+          <div class="quick-icon"><i class="bi bi-tags"></i></div>
+          <h5 class="card-title mb-0">Catálogos del sistema</h5>
+          <p class="card-text small text-muted mb-1">Ciudades, tipos de propiedad y características.</p>
+          <a href="<%= ctx %>/admin/catalogos.jsp" class="btn btn-warning fw-bold btn-sm align-self-start">Gestionar catálogos</a>
         </div>
       </div>
     </div>
     <div class="col-md-4">
-      <div class="card shadow-sm h-100">
+      <div class="card quick-card shadow-sm h-100">
         <div class="card-body">
-          <h5 class="card-title">Auditoría</h5>
-          <p class="card-text small text-muted">Historial de accesos y cambios en el sistema.</p>
-          <a href="<%= ctx %>/admin/auditoria.jsp" class="btn btn-warning fw-bold btn-sm">Ver auditoría</a>
+          <div class="quick-icon"><i class="bi bi-clock-history"></i></div>
+          <h5 class="card-title mb-0">Auditoría</h5>
+          <p class="card-text small text-muted mb-1">Historial de accesos y cambios en el sistema.</p>
+          <a href="<%= ctx %>/admin/auditoria.jsp" class="btn btn-warning fw-bold btn-sm align-self-start">Ver auditoría</a>
         </div>
       </div>
     </div>

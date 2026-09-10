@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*, java.util.*" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%!
     /** Devuelve el marcado SVG de un icono de línea según el tipo de propiedad. */
@@ -32,10 +32,15 @@
     String nombreSesion = (String) session.getAttribute("nombre");
     String rolSesion = (String) session.getAttribute("rol");
 
-    // ---- Propiedades destacadas: últimas disponibles, con ciudad/tipo/inmobiliaria ----
+    // ---- Propiedades destacadas: últimas disponibles, con ciudad/tipo/inmobiliaria y su
+    //      primera foto (si tiene alguna cargada en imagen_propiedad; si no, queda null y
+    //      la tarjeta muestra el icono de respaldo). Se guardan en una lista para poder
+    //      reutilizar la primera también en la tarjeta flotante del hero. ----
     final String SQL_DESTACADAS =
         "SELECT p.id_propiedad, p.titulo, p.precio, p.area, p.direccion, " +
-        "       tp.nombre AS tipo, c.nombre AS ciudad, i.nombre_comercial AS inmobiliaria " +
+        "       tp.nombre AS tipo, c.nombre AS ciudad, i.nombre_comercial AS inmobiliaria, " +
+        "       (SELECT ip.url_imagen FROM imagen_propiedad ip " +
+        "         WHERE ip.id_propiedad = p.id_propiedad ORDER BY ip.orden LIMIT 1) AS foto_url " +
         "FROM propiedad p " +
         "INNER JOIN tipo_propiedad tp ON p.id_tipo_propiedad = tp.id_tipo_propiedad " +
         "INNER JOIN ciudad c ON p.id_ciudad = c.id_ciudad " +
@@ -44,10 +49,24 @@
         "ORDER BY p.fecha_publicacion DESC " +
         "LIMIT 6";
 
+    List<Map<String, Object>> destacadas = new ArrayList<Map<String, Object>>();
     try {
         con = abrirConexion();
         st = con.createStatement();
         rs = st.executeQuery(SQL_DESTACADAS);
+        while (rs.next()) {
+            Map<String, Object> fila = new HashMap<String, Object>();
+            fila.put("id_propiedad", rs.getInt("id_propiedad"));
+            fila.put("titulo", rs.getString("titulo"));
+            fila.put("precio", rs.getDouble("precio"));
+            fila.put("area", rs.getDouble("area"));
+            fila.put("direccion", rs.getString("direccion"));
+            fila.put("tipo", rs.getString("tipo"));
+            fila.put("ciudad", rs.getString("ciudad"));
+            fila.put("inmobiliaria", rs.getString("inmobiliaria"));
+            fila.put("foto_url", rs.getString("foto_url"));
+            destacadas.add(fila);
+        }
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -85,6 +104,7 @@
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
+      <span class="hero-eyebrow">Bucaramanga y Santander</span>
       <h1>Encuentra dónde establecerte en Santander</h1>
       <p class="hero-lead">
         Raíz conecta a personas con inmobiliarias de confianza en Bucaramanga y el resto
@@ -143,15 +163,33 @@
       </div>
     </div>
 
-    <div class="hero-art" aria-hidden="true">
-      <svg viewBox="0 0 320 340" fill="none" stroke="#CBA646" stroke-width="1.2">
-        <path d="M20 200 160 40 300 200"/>
-        <path d="M45 190v130h230V190"/>
-        <path d="M130 320v-90h60v90"/>
-        <path d="M75 220h30v30H75zM215 220h30v30h-30z"/>
-        <path d="M160 40v-25" stroke-dasharray="3 4"/>
-        <circle cx="160" cy="10" r="4"/>
-      </svg>
+    <div class="hero-art">
+      <div class="hero-card">
+        <div class="hero-card-photo">
+<%
+    if (!destacadas.isEmpty() && destacadas.get(0).get("foto_url") != null) {
+        Map<String, Object> primera = destacadas.get(0);
+%>
+          <img src="<%= primera.get("foto_url") %>" alt="<%= primera.get("titulo") %>">
+<%
+    } else {
+        out.print(iconoTipo(destacadas.isEmpty() ? "" : (String) destacadas.get(0).get("tipo")));
+    }
+%>
+        </div>
+<%
+    if (!destacadas.isEmpty()) {
+        Map<String, Object> primera = destacadas.get(0);
+%>
+        <p><%= primera.get("titulo") %></p>
+        <span><%= primera.get("ciudad") %> · $ <%= String.format("%,.0f", (Double) primera.get("precio")) %></span>
+<%
+    } else {
+%>
+        <p>Tu próxima propiedad</p>
+        <span>Publicada por una inmobiliaria aliada</span>
+<%  } %>
+      </div>
     </div>
   </div>
 </section>
@@ -165,39 +203,52 @@
 
     <div class="listing-grid">
 <%
-        boolean hayDestacadas = false;
-        while (rs.next()) {
-            hayDestacadas = true;
-            String tipo = rs.getString("tipo");
-%>
-      <a class="listing-card" href="propiedades/ficha.jsp?id=<%= rs.getInt("id_propiedad") %>">
-        <%= iconoTipo(tipo) %>
-        <div>
-          <span class="listing-tag"><%= tipo %></span>
-          <h3><%= rs.getString("titulo") %></h3>
-          <p class="listing-address"><%= rs.getString("direccion") %>, <%= rs.getString("ciudad") %></p>
-        </div>
-        <dl class="listing-specs">
-          <div>
-            <dt>Área</dt>
-            <dd><%= rs.getDouble("area") %> m²</dd>
-          </div>
-          <div>
-            <dt>Publica</dt>
-            <dd><%= rs.getString("inmobiliaria") %></dd>
-          </div>
-        </dl>
-        <p class="listing-price">
-          $ <%= String.format("%,.0f", rs.getDouble("precio")) %>
-        </p>
-      </a>
-<%
-        }
-        if (!hayDestacadas) {
+        if (destacadas.isEmpty()) {
 %>
       <div class="empty-state">
         Todavía no hay propiedades disponibles publicadas. Vuelve pronto.
       </div>
+<%
+        }
+        for (Map<String, Object> prop : destacadas) {
+            String tipo = (String) prop.get("tipo");
+            String fotoUrl = (String) prop.get("foto_url");
+%>
+      <a class="listing-card" href="propiedades/ficha.jsp?id=<%= prop.get("id_propiedad") %>">
+        <div class="listing-photo">
+          <span class="listing-tag"><%= tipo %></span>
+<%
+            if (fotoUrl != null) {
+%>
+          <img src="<%= fotoUrl %>" alt="<%= prop.get("titulo") %>">
+<%
+            } else {
+%>
+          <span class="listing-icon-fallback"><%= iconoTipo(tipo) %></span>
+<%
+            }
+%>
+        </div>
+        <div class="listing-body">
+          <div>
+            <h3><%= prop.get("titulo") %></h3>
+            <p class="listing-address"><%= prop.get("direccion") %>, <%= prop.get("ciudad") %></p>
+          </div>
+          <dl class="listing-specs">
+            <div>
+              <dt>Área</dt>
+              <dd><%= prop.get("area") %> m²</dd>
+            </div>
+            <div>
+              <dt>Publica</dt>
+              <dd><%= prop.get("inmobiliaria") %></dd>
+            </div>
+          </dl>
+          <p class="listing-price">
+            $ <%= String.format("%,.0f", (Double) prop.get("precio")) %>
+          </p>
+        </div>
+      </a>
 <%
         }
 %>
