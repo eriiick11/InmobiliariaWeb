@@ -6,7 +6,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
-<% String[] rolesPermitidos = {"INMOBILIARIA", "ADMINISTRADOR"}; %>
+<% String[] rolesPermitidos = {"INMOBILIARIA"}; // el ADMINISTRADOR no gestiona propiedades/citas/solicitudes segun el enunciado %>
 <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
 <%
     request.setCharacterEncoding("UTF-8");

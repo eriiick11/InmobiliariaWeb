@@ -6,7 +6,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
-<% String[] rolesPermitidos = {"INMOBILIARIA", "ADMINISTRADOR"}; %>
+<% String[] rolesPermitidos = {"INMOBILIARIA"}; // el ADMINISTRADOR no gestiona propiedades/citas/solicitudes segun el enunciado %>
 <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
 <%
     String tituloPagina = "Solicitudes recibidas";
@@ -62,19 +62,18 @@
                                     : "RECHAZADA".equals(estado) ? "danger" : "warning";
 %>
 <div class="card shadow-sm mb-3">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-start">
-      <div>
-        <h5 class="mb-1"><%= esc(rs.getString("titulo")) %> — <%= rs.getString("tipo") %></h5>
-        <p class="text-muted small mb-1">
-          <%= esc(rs.getString("nombres")) %> <%= esc(rs.getString("apellidos")) %>
-          (<%= esc(rs.getString("correo")) %>) · <%= rs.getTimestamp("fecha_solicitud") %>
-        </p>
-      </div>
-      <span class="badge text-bg-<%= colorEstado %>"><%= estado %></span>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <h5 class="mb-0"><%= esc(rs.getString("titulo")) %> — <%= rs.getString("tipo") %></h5>
+      <p class="text-muted small mb-0">
+        <%= esc(rs.getString("nombres")) %> <%= esc(rs.getString("apellidos")) %>
+        (<%= esc(rs.getString("correo")) %>) · <%= rs.getTimestamp("fecha_solicitud") %>
+      </p>
     </div>
-
-    <h6 class="mt-3 mb-1">Documentos radicados</h6>
+    <span class="badge text-bg-<%= colorEstado %>"><%= estado %></span>
+  </div>
+  <div class="card-body">
+    <h6 class="mb-1">Documentos radicados</h6>
     <ul class="list-group list-group-flush mb-2">
 <%
         PreparedStatement psDoc = con.prepareStatement(

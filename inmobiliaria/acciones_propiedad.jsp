@@ -6,9 +6,10 @@
   inmobiliaria en sesion antes de modificar nada.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="javax.servlet.http.Part, java.io.File, java.io.InputStream, java.nio.file.Files, java.util.UUID" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
-<% String[] rolesPermitidos = {"INMOBILIARIA", "ADMINISTRADOR"}; %>
+<% String[] rolesPermitidos = {"INMOBILIARIA"}; // el ADMINISTRADOR no gestiona propiedades/citas/solicitudes segun el enunciado %>
 <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
 <%
     request.setCharacterEncoding("UTF-8");
@@ -31,10 +32,10 @@
         ps = con.prepareStatement("SELECT id_inmobiliaria FROM propiedad WHERE id_propiedad = ?");
         ps.setInt(1, idPropiedad);
         rs = ps.executeQuery();
-        boolean esDueÃ±o = rs.next() && rs.getInt("id_inmobiliaria") == idInmobiliaria;
+        boolean esPropietario = rs.next() && rs.getInt("id_inmobiliaria") == idInmobiliaria;
         cerrar(rs, ps);
 
-        if (!esDueÃ±o) {
+        if (!esPropietario) {
             response.sendRedirect(ctx + "/acceso-denegado.jsp");
             return;
         }
@@ -43,16 +44,44 @@
 
         // ========== AGREGAR IMAGEN ==========
         if ("agregar_imagen".equals(accion)) {
-            String url = request.getParameter("url_imagen");
-            int orden = aEntero(request.getParameter("orden"), 1);
-            ps = con.prepareStatement(
-                "INSERT INTO imagen_propiedad (id_propiedad, url_imagen, orden) VALUES (?, ?, ?)");
-            ps.setInt(1, idPropiedad);
-            ps.setString(2, url);
-            ps.setInt(3, orden);
-            ps.executeUpdate();
-            cerrar(ps);
-            con.commit();
+            String[] extensionesPermitidas = {"jpg", "jpeg", "png", "webp"};
+            Part parte = request.getPart("archivo_imagen");
+            String nombreOriginal = (parte != null) ? parte.getSubmittedFileName() : null;
+            String extension = "";
+            if (nombreOriginal != null && nombreOriginal.contains(".")) {
+                extension = nombreOriginal.substring(nombreOriginal.lastIndexOf('.') + 1).toLowerCase();
+            }
+            boolean extensionValida = false;
+            for (String ext : extensionesPermitidas) {
+                if (ext.equals(extension)) { extensionValida = true; break; }
+            }
+
+            if (parte == null || parte.getSize() == 0 || !extensionValida) {
+                destino += "&err=" + java.net.URLEncoder.encode(
+                    "Selecciona una imagen JPG, PNG o WEBP valida.", "UTF-8");
+            } else {
+                int orden = aEntero(request.getParameter("orden"), 1);
+
+                String rutaFisica = application.getRealPath("/uploads/propiedades");
+                File carpeta = new File(rutaFisica);
+                if (!carpeta.exists()) carpeta.mkdirs();
+
+                String nombreEnDisco = UUID.randomUUID().toString() + "." + extension;
+                File archivoDestino = new File(carpeta, nombreEnDisco);
+                try (InputStream in = parte.getInputStream()) {
+                    Files.copy(in, archivoDestino.toPath());
+                }
+                String urlImagen = ctx + "/uploads/propiedades/" + nombreEnDisco;
+
+                ps = con.prepareStatement(
+                    "INSERT INTO imagen_propiedad (id_propiedad, url_imagen, orden) VALUES (?, ?, ?)");
+                ps.setInt(1, idPropiedad);
+                ps.setString(2, urlImagen);
+                ps.setInt(3, orden);
+                ps.executeUpdate();
+                cerrar(ps);
+                con.commit();
+            }
 
         // ========== QUITAR IMAGEN ==========
         } else if ("quitar_imagen".equals(accion)) {

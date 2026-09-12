@@ -7,7 +7,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
-<% String[] rolesPermitidos = {"INMOBILIARIA", "ADMINISTRADOR"}; %>
+<% String[] rolesPermitidos = {"INMOBILIARIA"}; // el ADMINISTRADOR no gestiona propiedades/citas/solicitudes segun el enunciado %>
 <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
 <%
     String tituloPagina = "Propiedad";
@@ -201,12 +201,13 @@
     }
 %>
     </div>
-    <form method="post" action="<%= ctx %>/inmobiliaria/acciones_propiedad.jsp" class="row g-2">
+    <form method="post" action="<%= ctx %>/inmobiliaria/acciones_propiedad.jsp"
+          enctype="multipart/form-data" class="row g-2">
         <input type="hidden" name="accion" value="agregar_imagen">
         <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
         <div class="col-md-8">
-            <input class="form-control" name="url_imagen" required maxlength="255"
-                   placeholder="/img/propiedades/mi0001_3.jpg o URL completa">
+            <input type="file" class="form-control" name="archivo_imagen" required
+                   accept=".jpg,.jpeg,.png,.webp">
         </div>
         <div class="col-md-2">
             <input type="number" class="form-control" name="orden" value="1" min="1">

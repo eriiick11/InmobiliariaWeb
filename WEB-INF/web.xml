@@ -36,4 +36,49 @@
         <location>/acceso-denegado.jsp</location>
     </error-page>
 
+    <!-- subir_documento.jsp y acciones_propiedad.jsp se registran como servlet
+         (via jsp-file) SOLO para poder declararles multipart-config y leer
+         archivos reales con request.getPart(), sin escribir un Servlet .java -->
+    <servlet>
+        <servlet-name>SubirDocumento</servlet-name>
+        <jsp-file>/cliente/subir_documento.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubirDocumento</servlet-name>
+        <url-pattern>/cliente/subir_documento.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AccionesPropiedad</servlet-name>
+        <jsp-file>/inmobiliaria/acciones_propiedad.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccionesPropiedad</servlet-name>
+        <url-pattern>/inmobiliaria/acciones_propiedad.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GuardarPerfil</servlet-name>
+        <jsp-file>/guardar_perfil.jsp</jsp-file>
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GuardarPerfil</servlet-name>
+        <url-pattern>/guardar_perfil.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>

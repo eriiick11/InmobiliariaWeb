@@ -13,6 +13,8 @@
   background: linear-gradient(185deg, var(--forest-950), var(--forest-900));
   color: var(--stone-50);
   display: flex; flex-direction: column; padding: 28px 18px;
+  /* Se queda fijo en pantalla aunque .panel-main sea mas alto (ej. Reportes) */
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
 }
 .panel-sidebar .brand { color: var(--stone-50); margin-bottom: 8px; font-size: 1.35rem; }
 .panel-sidebar .brand span { color: var(--brass-400); }
@@ -30,6 +32,11 @@
   background: rgba(255,255,255,.07); color: var(--stone-50);
   border-left-color: var(--brass-400);
 }
+.panel-nav a.active {
+  background: rgba(255,255,255,.1); color: var(--stone-50);
+  border-left-color: var(--brass-400); font-weight: 500;
+}
+.panel-nav a.active i { color: var(--brass-400); opacity: 1; }
 
 .panel-user { border-top: 1px solid rgba(255,255,255,.14); padding-top: 16px; font-size: .85rem; }
 .panel-user p { margin: 0 0 8px; font-weight: 500; }
@@ -88,12 +95,19 @@
 .panel-main .btn-outline-success {
   color: #2E5C3F; border-color: #2E5C3F;
 }
-.panel-main .btn-outline-success:hover { background: #2E5C3F; border-color: #2E5C3F; }
+.panel-main .btn-outline-success:hover { background: #2E5C3F; border-color: #2E5C3F; color: var(--stone-50); }
 
 .panel-main .btn-outline-danger {
   color: #8A3B2E; border-color: #8A3B2E;
 }
-.panel-main .btn-outline-danger:hover { background: #8A3B2E; border-color: #8A3B2E; }
+.panel-main .btn-outline-danger:hover { background: #8A3B2E; border-color: #8A3B2E; color: var(--stone-50); }
+
+/* Botones/forms de accion en fila (Aprobar+Rechazar, Editar+Dar de baja...)
+   quedaban pegados porque cada <form class="d-inline"> no tiene margen propio. */
+.panel-main td form.d-inline + form.d-inline,
+.panel-main .card-body form.d-inline + form.d-inline {
+  margin-left: 6px;
+}
 
 .panel-main .btn-outline-secondary { color: var(--ink-600); border-color: rgba(22,36,29,.3); }
 .panel-main .btn-outline-secondary:hover { background: var(--ink-600); border-color: var(--ink-600); }
@@ -103,6 +117,13 @@
   border: 1px solid rgba(22, 36, 29, 0.08);
   border-radius: 10px;
   box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+/* Las tablas dentro de una card iban pegadas al borde (sin aire), a
+   diferencia de formularios que ya tienen padding via .card-body.
+   Este padding las empareja visualmente con el resto de las cards. */
+.panel-main .card .table-responsive {
+  padding: 10px;
 }
 .panel-main .card-header {
   background: var(--stone-100);
@@ -137,6 +158,15 @@
 .panel-main .text-bg-info    { background: #45646B !important; color: var(--stone-50) !important; }
 .panel-main .text-bg-warning { background: var(--brass-500) !important; color: var(--forest-950) !important; }
 
+/* ---------- Pestañas (reportes.jsp) ---------- */
+.panel-main .nav-pills .nav-link {
+  color: var(--ink-600); font-size: .88rem; border-radius: 5px;
+}
+.panel-main .nav-pills .nav-link:hover { background: var(--stone-100); }
+.panel-main .nav-pills .nav-link.active {
+  background: var(--forest-950); color: var(--stone-50);
+}
+
 /* ---------- Formularios ---------- */
 .panel-main .form-control, .panel-main .form-select {
   border-color: rgba(22, 36, 29, 0.2);
@@ -168,10 +198,13 @@
 /* ---------- Responsivo ---------- */
 @media (max-width: 760px) {
   .panel-shell { flex-direction: column; }
-  .panel-sidebar { width: 100%; flex-direction: row; align-items: center; gap: 20px; padding: 16px 20px; }
+  .panel-sidebar {
+    width: 100%; flex-direction: row; align-items: center; gap: 20px; padding: 16px 20px;
+    position: static; height: auto; overflow: visible;
+  }
   .panel-nav { flex-direction: row; flex: none; margin-top: 0; overflow-x: auto; }
   .panel-nav a { border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; }
-  .panel-nav a:hover { border-left-color: transparent; border-bottom-color: var(--brass-400); }
+  .panel-nav a:hover, .panel-nav a.active { border-left-color: transparent; border-bottom-color: var(--brass-400); }
   .panel-user { border-top: none; padding-top: 0; margin-left: auto; text-align: right; }
   .panel-main { padding: 28px 20px; }
 }
@@ -230,3 +263,6 @@
   display: flex; align-items: center; justify-content: center;
   font-size: 1.05rem; margin-bottom: 2px;
 }
+/* El texto de cada card puede ocupar 1 o 2 lineas segun la descripcion;
+   esto empuja el boton al fondo para que todos queden a la misma altura. */
+.quick-card .card-body .btn { margin-top: auto; align-self: flex-start; }

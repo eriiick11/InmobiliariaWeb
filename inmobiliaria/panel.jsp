@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ include file="/WEB-INF/jspf/conexion.jspf" %>
 <%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
-<% String[] rolesPermitidos = {"INMOBILIARIA", "ADMINISTRADOR"}; %>
+<% String[] rolesPermitidos = {"INMOBILIARIA"}; // el ADMINISTRADOR no gestiona propiedades/citas/solicitudes segun el enunciado %>
 <%@ include file="/WEB-INF/jspf/seguridad.jspf" %>
 <%
     String tituloPagina = "Mi panel";

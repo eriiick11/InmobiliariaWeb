@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <form method="post" action="<%= ctx %>/guardar_perfil.jsp">
+  <form method="post" action="<%= ctx %>/guardar_perfil.jsp" enctype="multipart/form-data">
     <div class="row g-3">
       <div class="col-md-6">
         <label class="form-label">Nombres</label>
@@ -84,9 +84,10 @@
         <input class="form-control" name="direccion" maxlength="150" value="<%= esc(direccion) %>">
       </div>
       <div class="col-12">
-        <label class="form-label">Foto (URL)</label>
-        <input class="form-control" name="foto" maxlength="255" value="<%= esc(foto) %>"
-               placeholder="URL de una imagen (sin subida real de archivos)">
+        <label class="form-label">Foto de perfil</label>
+        <input type="hidden" name="foto_actual" value="<%= esc(foto) %>">
+        <input type="file" class="form-control" name="archivo_foto" accept=".jpg,.jpeg,.png,.webp">
+        <div class="form-text">Déjalo vacío para conservar tu foto actual.</div>
       </div>
     </div>
     <div class="mt-4">

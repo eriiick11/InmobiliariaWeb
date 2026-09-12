@@ -63,14 +63,15 @@
     <a class="brand" href="<%= ctx %>/index.jsp">Ra<span>í</span>z</a>
     <nav class="main-nav">
       <a href="<%= ctx %>/index.jsp">Inicio</a>
-      <a href="<%= ctx %>/propiedades/listado.jsp">Propiedades</a>
+      <a class="active" href="<%= ctx %>/propiedades/listado.jsp">Propiedades</a>
     </nav>
     <div class="nav-actions">
 <% if (idUsuarioSesion == null) { %>
       <a class="btn btn-ghost" href="<%= ctx %>/login.jsp">Iniciar sesión</a>
       <a class="btn btn-brass" href="<%= ctx %>/registro.jsp">Crear cuenta</a>
 <% } else { %>
-      <a class="btn btn-ghost" href="<%= ctx %>/logout.jsp">Cerrar sesión</a>
+      <a class="btn btn-ghost" href="<%= ctx %>/inicio.jsp">Mi panel</a>
+      <a class="btn btn-brass" href="<%= ctx %>/logout.jsp">Cerrar sesión</a>
 <% } %>
     </div>
   </div>

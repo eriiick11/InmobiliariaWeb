@@ -84,7 +84,7 @@
   <div class="wrap">
     <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
     <nav class="main-nav">
-      <a href="index.jsp">Inicio</a>
+      <a class="active" href="index.jsp">Inicio</a>
       <a href="propiedades/listado.jsp">Propiedades</a>
       <a href="#nosotros">Nosotros</a>
     </nav>
