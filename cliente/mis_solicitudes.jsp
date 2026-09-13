@@ -83,17 +83,13 @@
     </ul>
 
 <%      if ("PENDIENTE".equals(estado)) { %>
-    <form method="post" action="<%= ctx %>/cliente/subir_documento.jsp" class="row g-2 align-items-end">
+    <form method="post" action="<%= ctx %>/cliente/subir_documento.jsp"
+          enctype="multipart/form-data" class="row g-2 align-items-end">
       <input type="hidden" name="id_solicitud" value="<%= idSolicitud %>">
-      <div class="col-md-5">
-        <label class="form-label small">Nombre del documento</label>
-        <input type="text" name="nombre_archivo" class="form-control form-control-sm" required
-               placeholder="Cedula.pdf">
-      </div>
-      <div class="col-md-5">
-        <label class="form-label small">Enlace (Drive, etc.)</label>
-        <input type="url" name="url_archivo" class="form-control form-control-sm" required
-               placeholder="https://...">
+      <div class="col-md-10">
+        <label class="form-label small">Archivo (PDF, JPG o PNG)</label>
+        <input type="file" name="archivo_documento" class="form-control form-control-sm" required
+               accept=".pdf,.jpg,.jpeg,.png">
       </div>
       <div class="col-md-2 d-grid">
         <button class="btn btn-sm btn-outline-dark">Subir</button>
