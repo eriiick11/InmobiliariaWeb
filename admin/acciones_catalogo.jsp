@@ -58,6 +58,11 @@
         }
         cerrar(ps);
 
+        if (accion != null) {
+            registrarAuditoria(con, idUsuarioSesion, accion, "catalogos",
+                "Accion '" + accion + "' sobre catalogo (id=" + id + ")");
+        }
+
     } catch (SQLIntegrityConstraintViolationException ex) {
         // La baja choca con una FK: el valor esta siendo usado por al menos una propiedad.
         destino += "?err=" + java.net.URLEncoder.encode(

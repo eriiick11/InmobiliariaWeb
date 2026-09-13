@@ -1,5 +1,6 @@
 <%-- login.jsp --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
 <%
     String error = request.getParameter("error");
     String msg = request.getParameter("msg");
@@ -27,8 +28,8 @@
     <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
     <h1>Inicia sesión</h1>
     <p class="auth-sub">Entra a tu panel para seguir donde ibas.</p>
-    <% if (msg != null) { %><p class="auth-msg"><%= msg %></p><% } %>
-    <% if (error != null) { %><p class="auth-error"><%= error %></p><% } %>
+    <% if (msg != null) { %><p class="auth-msg"><%= esc(msg) %></p><% } %>
+    <% if (error != null) { %><p class="auth-error"><%= esc(error) %></p><% } %>
     <form method="post" action="acceso.jsp">
       <div class="field"><label for="username">Usuario</label>
         <input type="text" id="username" name="username" required autofocus></div>

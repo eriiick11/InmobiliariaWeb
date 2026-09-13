@@ -66,4 +66,29 @@
             return "El usuario ya tiene ese rol asignado.";
         return "Error de base de datos: " + m;
     }
+
+    /** Deja constancia en la tabla auditoria de una accion realizada por un usuario.
+     *  Se llama con la MISMA conexion/transaccion de la operacion principal (para que,
+     *  si se hace rollback, el registro de auditoria tambien se deshaga).
+     *  Nunca lanza excepcion: un fallo al auditar no debe tumbar la operacion real. */
+    public void registrarAuditoria(java.sql.Connection con, int idUsuario,
+                                    String accion, String tablaAfectada, String detalle) {
+        java.sql.PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(
+                "INSERT INTO auditoria (id_usuario, accion, tabla_afectada, detalle) "
+              + "VALUES (?, ?, ?, ?)");
+            ps.setInt(1, idUsuario);
+            ps.setString(2, accion);
+            ps.setString(3, tablaAfectada);
+            ps.setString(4, detalle);
+            ps.executeUpdate();
+        } catch (Exception ignorada) {
+            // No se propaga: registrar la auditoria nunca debe impedir la operacion principal.
+        } finally {
+            // Cierre directo (sin usar cerrar(), que vive en conexion.jspf y no
+            // siempre esta incluido en la misma pagina que utilidades.jspf).
+            if (ps != null) { try { ps.close(); } catch (Exception ignorada2) { } }
+        }
+    }
 %>

@@ -86,6 +86,9 @@
             ps.executeUpdate();
             cerrar(ps);
 
+            registrarAuditoria(con, idUsuarioSesion, "UPDATE", "propiedad",
+                "Actualizacion de propiedad " + matricula.trim());
+
             con.commit();
             destino = ctx + "/inmobiliaria/propiedad_form.jsp?id=" + idPropiedad
                 + "&msg=" + java.net.URLEncoder.encode("Propiedad actualizada.", "UTF-8");
@@ -111,6 +114,9 @@
             rs.next();
             int nuevoId = rs.getInt(1);
             cerrar(rs, ps);
+
+            registrarAuditoria(con, idUsuarioSesion, "INSERT", "propiedad",
+                "Publicacion de propiedad " + matricula.trim());
 
             con.commit();
             destino = ctx + "/inmobiliaria/propiedad_form.jsp?id=" + nuevoId

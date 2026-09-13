@@ -62,6 +62,9 @@
         ps.executeUpdate();
         cerrar(ps);
 
+        registrarAuditoria(con, idUsuarioSesion, "UPDATE", "cita",
+            "Cita id " + idCita + " actualizada a " + nuevoEstado);
+
         response.sendRedirect(destino + "?msg="
             + java.net.URLEncoder.encode("Cita actualizada a " + nuevoEstado + ".", "UTF-8"));
 

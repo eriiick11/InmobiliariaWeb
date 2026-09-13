@@ -83,6 +83,9 @@
         session.setAttribute("rol", rolPrincipal);    // rol activo/principal
         session.setMaxInactiveInterval(30 * 60);
 
+        registrarAuditoria(con, idUsuario, "LOGIN", "usuario",
+            "Inicio de sesion (" + rolPrincipal + ")");
+
         response.sendRedirect("inicio.jsp");
 
     } catch (SQLException ex) {

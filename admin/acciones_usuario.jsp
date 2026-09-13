@@ -35,6 +35,8 @@
             ps.setInt(2, idRol);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "INSERT", "usuario_rol",
+                "Asignacion de rol id " + idRol + " al usuario id " + idUsuario);
             con.commit();
             destino += "?msg=" + java.net.URLEncoder.encode("Rol asignado.", "UTF-8");
 
@@ -46,6 +48,8 @@
             ps.setInt(2, idRol);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "DELETE", "usuario_rol",
+                "Revocacion de rol id " + idRol + " al usuario id " + idUsuario);
             con.commit();
             destino += "?msg=" + java.net.URLEncoder.encode("Rol revocado.", "UTF-8");
 
@@ -54,6 +58,8 @@
             ps.setInt(1, idUsuario);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "UPDATE", "usuario",
+                "Cuenta del usuario id " + idUsuario + " activada");
             con.commit();
             destino += "?msg=" + java.net.URLEncoder.encode("Cuenta activada.", "UTF-8");
 
@@ -62,6 +68,8 @@
             ps.setInt(1, idUsuario);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "UPDATE", "usuario",
+                "Cuenta del usuario id " + idUsuario + " inactivada");
             con.commit();
             destino += "?msg=" + java.net.URLEncoder.encode("Cuenta inactivada.", "UTF-8");
         }

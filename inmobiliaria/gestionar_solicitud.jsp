@@ -41,6 +41,11 @@
         int filas = ps.executeUpdate();
         cerrar(ps);
 
+        if (filas > 0) {
+            registrarAuditoria(con, idUsuarioSesion, "UPDATE", "solicitud",
+                "Solicitud id " + idSolicitud + " actualizada a " + nuevoEstado);
+        }
+
         destino += filas > 0
             ? "?msg=" + java.net.URLEncoder.encode("Solicitud actualizada.", "UTF-8")
             : "?err=" + java.net.URLEncoder.encode("No se pudo actualizar esa solicitud.", "UTF-8");

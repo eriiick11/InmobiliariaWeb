@@ -126,6 +126,8 @@
             ps.setInt(1, idPropiedad);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "DELETE", "propiedad",
+                "Baja logica de la propiedad id " + idPropiedad);
             con.commit();
             destino = ctx + "/inmobiliaria/propiedades.jsp?msg="
                 + java.net.URLEncoder.encode("Propiedad dada de baja.", "UTF-8");
@@ -136,6 +138,8 @@
             ps.setInt(1, idPropiedad);
             ps.executeUpdate();
             cerrar(ps);
+            registrarAuditoria(con, idUsuarioSesion, "UPDATE", "propiedad",
+                "Reactivacion de la propiedad id " + idPropiedad);
             con.commit();
             destino = ctx + "/inmobiliaria/propiedades.jsp?msg="
                 + java.net.URLEncoder.encode("Propiedad reactivada.", "UTF-8");
