@@ -104,11 +104,11 @@
 <section class="hero">
   <div class="wrap">
     <div class="hero-copy">
-      <span class="hero-eyebrow">Bucaramanga y Santander</span>
-      <h1>Encuentra dónde establecerte en Santander</h1>
+      <span class="hero-eyebrow">Propiedades en toda Colombia</span>
+      <h1>Encuentra dónde establecerte</h1>
       <p class="hero-lead">
-        Raíz conecta a personas con inmobiliarias de confianza en Bucaramanga y el resto
-        del departamento. Busca, agenda una visita y da el siguiente paso sin salir de aquí.
+        Raíz conecta a personas con inmobiliarias de confianza en distintas ciudades del país.
+        Busca, agenda una visita y da el siguiente paso sin salir de aquí.
       </p>
 
       <div class="search-panel">

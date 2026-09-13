@@ -19,7 +19,7 @@
 <div class="auth-visual" aria-hidden="true">
   <a class="brand" href="index.jsp">Ra<span>í</span>z</a>
   <blockquote>&ldquo;Un lugar para establecerte empieza por encontrarlo bien.&rdquo;</blockquote>
-  <p class="auth-visual-note">Propiedades verificadas en Bucaramanga y Santander.</p>
+  <p class="auth-visual-note">Propiedades verificadas en distintas ciudades del país.</p>
 </div>
 
 <div class="auth-form-side">
