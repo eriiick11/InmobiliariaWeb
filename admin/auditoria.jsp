@@ -23,25 +23,29 @@
     <a href="<%= ctx %>/admin/panel.jsp" class="btn btn-outline-dark btn-sm">&larr; Volver</a>
 </div>
 
-<form method="get" class="row g-2 mb-3">
-    <div class="col-auto">
-        <select name="accion" class="form-select form-select-sm">
-            <option value="">Todas las acciones</option>
-            <% for (String a : new String[]{"LOGIN","INSERT","UPDATE","DELETE"}) { %>
-                <option value="<%= a %>" <%= a.equals(fAccion) ? "selected" : "" %>><%= a %></option>
-            <% } %>
-        </select>
-    </div>
-    <div class="col-auto">
-        <input type="text" name="tabla" class="form-control form-control-sm"
-               placeholder="Tabla afectada (ej: propiedad)"
-               value="<%= fTabla != null ? esc(fTabla) : "" %>">
-    </div>
-    <div class="col-auto">
-        <button class="btn btn-sm btn-outline-dark">Filtrar</button>
-        <a href="<%= ctx %>/admin/auditoria.jsp" class="btn btn-sm btn-outline-secondary">Limpiar</a>
-    </div>
-</form>
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    <form method="get" class="row g-2 align-items-center mb-0">
+        <div class="col-auto">
+            <select name="accion" class="form-select form-select-sm">
+                <option value="">Todas las acciones</option>
+                <% for (String a : new String[]{"LOGIN","INSERT","UPDATE","DELETE"}) { %>
+                    <option value="<%= a %>" <%= a.equals(fAccion) ? "selected" : "" %>><%= a %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="tabla" class="form-control form-control-sm"
+                   placeholder="Tabla afectada (ej: propiedad)"
+                   value="<%= fTabla != null ? esc(fTabla) : "" %>">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-sm btn-outline-dark">Filtrar</button>
+            <a href="<%= ctx %>/admin/auditoria.jsp" class="btn btn-sm btn-outline-secondary">Limpiar</a>
+        </div>
+    </form>
+  </div>
+</div>
 
 <div class="card shadow-sm">
 <div class="table-responsive">

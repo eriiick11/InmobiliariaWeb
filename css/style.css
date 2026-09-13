@@ -17,7 +17,7 @@
   --ink-600:   #4A4F4A;
   --white:     #FFFFFF;
 
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Sora", "Segoe UI", Arial, sans-serif;
   --font-body: "Work Sans", "Segoe UI", Arial, sans-serif;
 
   --max-width: 1180px;
@@ -224,11 +224,160 @@ a { color: inherit; text-decoration: none; }
   margin: 0 0 40px;
 }
 
+.back-link {
+  margin: 0 0 20px;
+}
+.back-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--forest-950);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 9px 18px 9px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(22, 36, 29, 0.16);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.back-link a:hover, .back-link a:focus-visible {
+  background: var(--forest-950);
+  color: var(--stone-50);
+  border-color: var(--forest-950);
+  transform: translateX(-3px);
+  text-decoration: none;
+}
+
+/* ---------- Ficha de propiedad (detalle) ---------- */
+.property-detail {
+  background: var(--white);
+  border: 1px solid rgba(22, 36, 29, 0.08);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  padding: 40px 44px 44px;
+  margin-bottom: 24px;
+}
+.property-detail h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: var(--forest-950);
+  margin: 0 0 6px;
+}
+.property-detail h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-600);
+  margin: 34px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(22, 36, 29, 0.1);
+}
+.property-detail h3:first-of-type { margin-top: 30px; }
+.property-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-900);
+  max-width: 68ch;
+  margin: 18px 0 0;
+}
+.listing-publisher {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--forest-950);
+  background: var(--stone-50);
+  border: 1px solid rgba(22, 36, 29, 0.1);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin: 0;
+}
+
+/* Lista de caracteristicas como chips en vez de vinetas planas ("se ve a Word") */
+.property-detail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.property-detail li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--stone-50);
+  border: 1px solid rgba(22, 36, 29, 0.08);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  color: var(--ink-900);
+}
+.property-detail li::before {
+  content: "\2713";
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(155deg, var(--brass-400), var(--brass-500));
+  color: var(--forest-950);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+.property-detail li.text-muted {
+  grid-column: 1 / -1;
+  background: transparent;
+  border-style: dashed;
+}
+.property-detail li.text-muted::before { display: none; }
+
+.text-muted { color: var(--ink-600); }
+.listing-meta { font-size: 0.85rem; color: var(--ink-600); }
+
 .search-panel {
   background: var(--stone-50);
   border-radius: 8px;
   padding: 24px;
   box-shadow: var(--shadow-lifted);
+}
+
+/* ---------- Tarjetas de accion en la ficha de propiedad (agendar / solicitar) ---------- */
+.action-cards {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+.action-card {
+  flex: 1;
+  min-width: 0;
+  background: var(--white);
+  border: 1px solid rgba(22, 36, 29, 0.08);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+.action-card::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--forest-900), var(--brass-400));
+}
+.action-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0 0 12px;
+}
+@media (max-width: 640px) {
+  .action-cards { flex-direction: column; }
 }
 
 .search-panel form {
@@ -294,7 +443,36 @@ fieldset.field legend {
   background: linear-gradient(90deg, var(--forest-900), var(--brass-400));
 }
 
-/* ---------- Chips de caracteristicas (listado.jsp) ---------- */
+/* ---------- Panel plegable de caracteristicas (listado.jsp) ----------
+   Nota: se usa <details>/<summary> nativo (esta pagina no carga el JS de
+   Bootstrap), con la clase "char-field" -- deliberadamente distinta de
+   ".field" -- para que las reglas ".field label" / ".field input" (pensadas
+   para los demas filtros) no le "hereden" display:block ni width:100% a
+   los chips anidados. */
+.search-panel form > details.char-field {
+  grid-column: 1 / -1;
+}
+.char-field summary {
+  cursor: pointer;
+  font-size: 0.78rem;
+  color: var(--ink-600);
+  margin-bottom: 6px;
+  list-style: none;
+}
+.char-field summary::-webkit-details-marker { display: none; }
+.char-field summary::before {
+  content: "▸ ";
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+.char-field[open] summary::before { transform: rotate(90deg); }
+
+.check-inline-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
 .check-inline {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 7px 14px; margin: 0 6px 6px 0;
@@ -309,7 +487,7 @@ fieldset.field legend {
   background: var(--brass-400); border-color: var(--brass-500); color: var(--forest-950);
   font-weight: 500;
 }
-.check-inline input { accent-color: var(--forest-950); }
+.check-inline input { width: auto; accent-color: var(--forest-950); }
 
 .hero-art {
   display: flex;
@@ -446,6 +624,14 @@ fieldset.field legend {
   padding: 4px 10px;
   border-radius: 3px;
   z-index: 2;
+}
+
+/* Variante para usar .listing-tag fuera de un .listing-photo (ej. ficha.jsp):
+   sin foto detras sobre la que "flotar", se muestra como badge normal en flujo. */
+.listing-tag-inline {
+  position: static;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .listing-body {

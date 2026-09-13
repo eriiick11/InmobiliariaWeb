@@ -87,24 +87,25 @@
             <td class="text-end"><%= pesos(rs.getDouble("precio")) %></td>
             <td><span class="badge text-bg-<%= colorEstado %>"><%= estado %></span></td>
             <td class="text-end">
+              <div class="row-actions">
                 <a class="btn btn-sm btn-outline-dark"
                    href="<%= ctx %>/inmobiliaria/propiedad_form.jsp?id=<%= rs.getInt("id_propiedad") %>">
                    Editar</a>
                 <% if (!"INACTIVO".equals(estado)) { %>
                 <form method="post" action="<%= ctx %>/inmobiliaria/acciones_propiedad.jsp"
-                      class="d-inline"
                       onsubmit="return confirm('Dar de baja esta propiedad?')">
                     <input type="hidden" name="accion" value="baja">
                     <input type="hidden" name="id_propiedad" value="<%= rs.getInt("id_propiedad") %>">
                     <button class="btn btn-sm btn-outline-danger">Dar de baja</button>
                 </form>
                 <% } else { %>
-                <form method="post" action="<%= ctx %>/inmobiliaria/acciones_propiedad.jsp" class="d-inline">
+                <form method="post" action="<%= ctx %>/inmobiliaria/acciones_propiedad.jsp">
                     <input type="hidden" name="accion" value="reactivar">
                     <input type="hidden" name="id_propiedad" value="<%= rs.getInt("id_propiedad") %>">
                     <button class="btn btn-sm btn-outline-success">Reactivar</button>
                 </form>
                 <% } %>
+              </div>
             </td>
         </tr>
 <%

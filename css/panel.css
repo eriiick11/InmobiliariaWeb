@@ -39,6 +39,15 @@
 .panel-nav a.active i { color: var(--brass-400); opacity: 1; }
 
 .panel-user { border-top: 1px solid rgba(255,255,255,.14); padding-top: 16px; font-size: .85rem; }
+.panel-user-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  object-fit: cover; display: block; margin-bottom: 10px;
+}
+.panel-user-avatar-fallback {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(155deg, var(--brass-400), var(--brass-500));
+  color: var(--forest-950); font-weight: 600; font-size: 1rem;
+}
 .panel-user p { margin: 0 0 8px; font-weight: 500; }
 .panel-user .badge {
   display: inline-block; background: linear-gradient(155deg, var(--brass-400), var(--brass-500));
@@ -102,15 +111,30 @@
 }
 .panel-main .btn-outline-danger:hover { background: #8A3B2E; border-color: #8A3B2E; color: var(--stone-50); }
 
-/* Botones/forms de accion en fila (Aprobar+Rechazar, Editar+Dar de baja...)
-   quedaban pegados porque cada <form class="d-inline"> no tiene margen propio. */
-.panel-main td form.d-inline + form.d-inline,
-.panel-main .card-body form.d-inline + form.d-inline {
+/* Botones/forms de accion en fila (Aprobar+Rechazar, Editar+Dar de baja,
+   Asignar rol+Inactivar...) quedaban pegados. La regla anterior solo cubria
+   "form.d-inline + form.d-inline" y se quedaba corta en dos casos reales:
+   inmobiliaria/propiedades.jsp usa un <a class="btn"> (no un form) como
+   primer hermano, y admin/usuarios.jsp usa "d-inline-flex gap-1" (no
+   "d-inline") en su primer form. Esta version no depende de si el elemento
+   es <a> o <form> ni de la clase Bootstrap exacta usada. */
+.panel-main td.text-end > .btn,
+.panel-main td.text-end > form,
+.panel-main .card-body > .btn,
+.panel-main .card-body > form {
   margin-left: 6px;
+}
+.panel-main td.text-end > .btn:first-child,
+.panel-main td.text-end > form:first-child,
+.panel-main .card-body > .btn:first-child,
+.panel-main .card-body > form:first-child {
+  margin-left: 0;
 }
 
 .panel-main .btn-outline-secondary { color: var(--ink-600); border-color: rgba(22,36,29,.3); }
-.panel-main .btn-outline-secondary:hover { background: var(--ink-600); border-color: var(--ink-600); }
+.panel-main .btn-outline-secondary:hover {
+  background: var(--ink-600); border-color: var(--ink-600); color: var(--stone-50);
+}
 
 /* ---------- Cards ---------- */
 .panel-main .card {
@@ -140,16 +164,35 @@
 }
 .panel-main .card:has(.card-body > .btn) { transition: transform .2s ease, box-shadow .2s ease; }
 
-/* ---------- Tablas ---------- */
+/* ---------- Tablas ----------
+   El thead.table-dark (fondo casi negro --forest-950) se sentia como una
+   franja aislada frente a las cards blancas del resto de la app (mismo
+   problema visual que ya resuelven los card-header en --stone-100). Se
+   suaviza para que se sienta parte de la misma familia visual. */
 .panel-main .table { --bs-table-bg: transparent; }
 .panel-main .table-dark {
-  --bs-table-bg: var(--forest-950);
-  --bs-table-color: var(--stone-50);
+  --bs-table-bg: var(--stone-100);
+  --bs-table-color: var(--forest-950);
+  font-weight: 600;
+  border-bottom: 2px solid var(--brass-400);
 }
 .panel-main .table-hover > tbody > tr:hover > * {
   --bs-table-hover-bg: rgba(184, 146, 47, 0.09);
 }
 .panel-main .table td, .panel-main .table th { border-color: rgba(22, 36, 29, 0.08); }
+
+/* Botones de accion por fila (Editar / Dar de baja / Reactivar): antes quedaban
+   pegados uno encima del otro cuando la columna no tenia ancho suficiente para
+   mostrarlos en linea. Con flex-wrap + gap siempre queda un respiro entre ellos,
+   tanto en una sola fila como cuando bajan a dos lineas en pantallas angostas. */
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+.row-actions form { margin: 0; }
 
 /* ---------- Badges (estados) ---------- */
 .panel-main .text-bg-success { background: #2E5C3F !important; color: var(--stone-50) !important; }

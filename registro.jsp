@@ -1,7 +1,16 @@
 <%-- registro.jsp - Formulario publico de registro (rol CLIENTE por defecto) --%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jspf/utilidades.jspf" %>
 <%
     String error = request.getParameter("error");
+    // Repoblar campos no sensibles si venimos de un error de registrar.jsp
+    // (clave/clave2 nunca se repoblan, ver registrar.jsp)
+    String vDocumento = esc(request.getParameter("documento"));
+    String vNombres   = esc(request.getParameter("nombres"));
+    String vApellidos = esc(request.getParameter("apellidos"));
+    String vCorreo    = esc(request.getParameter("correo"));
+    String vUsername  = esc(request.getParameter("username"));
+    String vTelefono  = esc(request.getParameter("telefono"));
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,7 +18,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crear cuenta | Raíz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/auth.css">
 </head>
@@ -31,17 +40,17 @@
     <% } %>
     <form method="post" action="registrar.jsp">
       <div class="field"><label for="documento">Documento</label>
-        <input type="text" id="documento" name="documento" required maxlength="20"></div>
+        <input type="text" id="documento" name="documento" required maxlength="20" value="<%= vDocumento %>"></div>
       <div class="field"><label for="nombres">Nombres</label>
-        <input type="text" id="nombres" name="nombres" required maxlength="80"></div>
+        <input type="text" id="nombres" name="nombres" required maxlength="80" value="<%= vNombres %>"></div>
       <div class="field"><label for="apellidos">Apellidos</label>
-        <input type="text" id="apellidos" name="apellidos" required maxlength="80"></div>
+        <input type="text" id="apellidos" name="apellidos" required maxlength="80" value="<%= vApellidos %>"></div>
       <div class="field"><label for="correo">Correo</label>
-        <input type="email" id="correo" name="correo" required maxlength="100"></div>
+        <input type="email" id="correo" name="correo" required maxlength="100" value="<%= vCorreo %>"></div>
       <div class="field"><label for="username">Usuario</label>
-        <input type="text" id="username" name="username" required maxlength="50"></div>
+        <input type="text" id="username" name="username" required maxlength="50" value="<%= vUsername %>"></div>
       <div class="field"><label for="telefono">Teléfono</label>
-        <input type="text" id="telefono" name="telefono" maxlength="20"></div>
+        <input type="text" id="telefono" name="telefono" maxlength="20" value="<%= vTelefono %>"></div>
       <div class="field"><label for="clave">Clave</label>
         <input type="password" id="clave" name="clave" required minlength="6"></div>
       <div class="field"><label for="clave2">Confirmar clave</label>

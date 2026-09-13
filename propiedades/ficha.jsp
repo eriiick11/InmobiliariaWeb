@@ -53,7 +53,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><%= encontrada ? esc(titulo) : "Propiedad" %> | Raíz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%= ctx %>/css/style.css">
 </head>
 <body>
@@ -83,11 +83,14 @@
     <div class="empty-state">Esta propiedad no existe o ya no está disponible.
       <a href="<%= ctx %>/propiedades/listado.jsp">Volver al catálogo</a></div>
 <% } else { %>
-    <span class="listing-tag"><%= esc(tipo) %></span>
+    <p class="back-link"><a href="<%= ctx %>/propiedades/listado.jsp">&larr; Volver al catálogo</a></p>
+
+    <div class="property-detail">
+    <span class="listing-tag listing-tag-inline"><%= esc(tipo) %></span>
     <h2><%= esc(titulo) %></h2>
     <p class="listing-address"><%= esc(direccion) %>, <%= esc(ciudad) %></p>
     <p class="listing-price"><%= pesos(precio) %> — <%= area %> m² — <%= esc(estado) %></p>
-    <p><%= esc(descripcion) %></p>
+    <p class="property-desc"><%= esc(descripcion) %></p>
 
     <h3>Galería</h3>
     <div class="listing-grid">
@@ -138,15 +141,21 @@
     </ul>
 
     <h3>Publica</h3>
-    <p><%= esc(inmobiliaria) %></p>
+    <p class="listing-publisher"><%= esc(inmobiliaria) %></p>
+    </div>
 <%
-    // Visitante: no ve datos de contacto completos ni puede agendar/favoritos.
+    // El visitante sin sesion tambien ve los 3 CTA (favorito, agendar, solicitar);
+    // al hacer click sin sesion, cada uno lo manda a iniciar sesion.
+    if (idUsuarioSesion == null || "CLIENTE".equals(rolSesion)) {
+%>
+<%
     if (idUsuarioSesion == null) {
 %>
-    <p class="text-muted">Inicia sesión como cliente para ver el contacto completo,
-       agendar una visita y guardarla en tus favoritos.</p>
+    <a href="<%= ctx %>/login.jsp" class="btn btn-ghost" style="margin-top:16px;display:inline-block">
+      ♡ Guardar en favoritos
+    </a>
 <%
-    } else if ("CLIENTE".equals(rolSesion)) {
+    } else {
         boolean esFavorito = false;
         try {
             ps = con.prepareStatement(
@@ -167,51 +176,71 @@
     </form>
 <%
     } %>
+
+    <div class="action-cards">
+      <div class="action-card">
+        <h4>Agendar visita</h4>
 <%
-    if ("CLIENTE".equals(rolSesion)) {
+    if (idUsuarioSesion == null) {
 %>
-    <div class="search-panel" style="max-width:420px;margin-top:16px">
-      <h4 style="font-family:var(--font-display);font-size:1.05rem;margin:0 0 12px">Agendar visita</h4>
+        <p class="listing-meta" style="margin-bottom:14px">
+          Inicia sesión como cliente para agendar una visita a esta propiedad.
+        </p>
+        <a href="<%= ctx %>/login.jsp" class="btn btn-brass">Iniciar sesión</a>
 <%
+    } else {
         String msgCita = request.getParameter("msg");
         String errCita = request.getParameter("err");
         if (msgCita != null) { %>
-      <p class="listing-tag" style="background:rgba(122,75,46,0.14);margin-bottom:10px"><%= esc(msgCita) %></p>
+        <p class="listing-tag listing-tag-inline" style="background:rgba(122,75,46,0.14)"><%= esc(msgCita) %></p>
 <%      }
         if (errCita != null) { %>
-      <p class="listing-tag" style="background:rgba(180,40,40,0.14);color:#7a1f1f;margin-bottom:10px"><%= esc(errCita) %></p>
+        <p class="listing-tag listing-tag-inline" style="background:rgba(180,40,40,0.14);color:#7a1f1f"><%= esc(errCita) %></p>
 <%      } %>
-      <form method="post" action="<%= ctx %>/cliente/agendar_cita.jsp">
-        <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
-        <div class="field" style="margin-bottom:12px">
-          <label for="fechaHora">Fecha y hora de la visita</label>
-          <input type="datetime-local" id="fechaHora" name="fecha_hora" required>
-        </div>
-        <button type="submit" class="btn btn-brass">Solicitar cita</button>
-      </form>
-      <p class="listing-meta" style="margin-top:10px">
-        La inmobiliaria revisará tu solicitud y la aprobará o rechazará.
-        No se pueden agendar dos visitas a la misma propiedad en el mismo horario.
-      </p>
-    </div>
+        <form method="post" action="<%= ctx %>/cliente/agendar_cita.jsp">
+          <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
+          <div class="field" style="margin-bottom:12px">
+            <label for="fechaHora">Fecha y hora de la visita</label>
+            <input type="datetime-local" id="fechaHora" name="fecha_hora" required>
+          </div>
+          <button type="submit" class="btn btn-brass">Solicitar cita</button>
+        </form>
+        <p class="listing-meta" style="margin-top:10px">
+          La inmobiliaria revisará tu solicitud y la aprobará o rechazará.
+          No se pueden agendar dos visitas a la misma propiedad en el mismo horario.
+        </p>
+<%  } %>
+      </div>
 
-    <div class="search-panel" style="max-width:420px;margin-top:16px">
-      <h4 style="font-family:var(--font-display);font-size:1.05rem;margin:0 0 12px">Solicitar compra o arriendo</h4>
-      <form method="post" action="<%= ctx %>/cliente/solicitar.jsp">
-        <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
-        <div class="field" style="margin-bottom:12px">
-          <label for="tipoSolicitud">Tipo de trámite</label>
-          <select id="tipoSolicitud" name="tipo" required>
-            <option value="COMPRA">Compra</option>
-            <option value="ARRIENDO">Arriendo</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-brass">Enviar solicitud</button>
-      </form>
-      <p class="listing-meta" style="margin-top:10px">
-        Después de radicar la solicitud podrás subir tus documentos y ver el estado
-        del trámite en <a href="<%= ctx %>/cliente/mis_solicitudes.jsp">Mis solicitudes</a>.
-      </p>
+      <div class="action-card">
+        <h4>Solicitar compra o arriendo</h4>
+<%
+    if (idUsuarioSesion == null) {
+%>
+        <p class="listing-meta" style="margin-bottom:14px">
+          Inicia sesión como cliente para radicar una solicitud de compra o arriendo.
+        </p>
+        <a href="<%= ctx %>/login.jsp" class="btn btn-brass">Iniciar sesión</a>
+<%
+    } else {
+%>
+        <form method="post" action="<%= ctx %>/cliente/solicitar.jsp">
+          <input type="hidden" name="id_propiedad" value="<%= idPropiedad %>">
+          <div class="field" style="margin-bottom:12px">
+            <label for="tipoSolicitud">Tipo de trámite</label>
+            <select id="tipoSolicitud" name="tipo" required>
+              <option value="COMPRA">Compra</option>
+              <option value="ARRIENDO">Arriendo</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-brass">Enviar solicitud</button>
+        </form>
+        <p class="listing-meta" style="margin-top:10px">
+          Después de radicar la solicitud podrás subir tus documentos y ver el estado
+          del trámite en <a href="<%= ctx %>/cliente/mis_solicitudes.jsp">Mis solicitudes</a>.
+        </p>
+<%  } %>
+      </div>
     </div>
 <% } %>
 <% } %>

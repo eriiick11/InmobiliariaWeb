@@ -74,7 +74,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo de propiedades | Raíz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%= ctx %>/css/style.css">
 </head>
 <body>
@@ -145,8 +145,9 @@
         <input type="number" id="precioMax" name="precioMax" min="0" step="1000000"
                value="<%= precioMax > 0 ? String.valueOf((long) precioMax) : "" %>" placeholder="Sin límite">
       </div>
-      <fieldset class="field">
-        <legend>Características</legend>
+      <details class="char-field" <%= !caracSeleccionadas.isEmpty() ? "open" : "" %>>
+        <summary>Características</summary>
+        <div class="check-inline-wrap">
 <%
     st = con.createStatement();
     rs = st.executeQuery("SELECT id_caracteristica, nombre FROM caracteristica ORDER BY nombre");
@@ -161,7 +162,8 @@
 <%  }
     cerrar(rs, st);
 %>
-      </fieldset>
+        </div>
+      </details>
       <button type="submit" class="btn btn-brass">Buscar</button>
     </form>
 

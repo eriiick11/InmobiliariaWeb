@@ -110,6 +110,7 @@
                 <% } %>
             </td>
             <td class="text-end">
+              <div class="row-actions">
                 <form method="post" action="<%= ctx %>/admin/acciones_usuario.jsp" class="d-inline-flex gap-1">
                     <input type="hidden" name="accion" value="asignar_rol">
                     <input type="hidden" name="id_usuario" value="<%= idUsuario %>">
@@ -125,13 +126,14 @@
                     </select>
                     <button class="btn btn-sm btn-outline-dark">+ Asignar</button>
                 </form>
-                <form method="post" action="<%= ctx %>/admin/acciones_usuario.jsp" class="d-inline"
+                <form method="post" action="<%= ctx %>/admin/acciones_usuario.jsp"
                       onsubmit="return confirm('<%= activo ? "¿Inactivar" : "¿Activar" %> esta cuenta?')">
                     <input type="hidden" name="accion" value="<%= activo ? "inactivar" : "activar" %>">
                     <input type="hidden" name="id_usuario" value="<%= idUsuario %>">
                     <button class="btn btn-sm <%= activo ? "btn-outline-danger" : "btn-outline-success" %>">
                         <%= activo ? "Inactivar" : "Activar" %></button>
                 </form>
+              </div>
             </td>
         </tr>
 <%

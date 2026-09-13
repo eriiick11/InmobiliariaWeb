@@ -86,24 +86,26 @@
             <td><%= rs.getTimestamp("fecha_hora") %></td>
             <td><span class="badge text-bg-<%= colorEstado %>"><%= estado %></span></td>
             <td class="text-end">
+              <div class="row-actions">
 <%          if ("PENDIENTE".equals(estado)) { %>
-                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp" class="d-inline">
+                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp">
                     <input type="hidden" name="id_cita" value="<%= idCita %>">
                     <input type="hidden" name="accion" value="aprobar">
                     <button class="btn btn-sm btn-outline-success">Aprobar</button>
                 </form>
-                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp" class="d-inline">
+                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp">
                     <input type="hidden" name="id_cita" value="<%= idCita %>">
                     <input type="hidden" name="accion" value="rechazar">
                     <button class="btn btn-sm btn-outline-danger">Rechazar</button>
                 </form>
 <%          } else if ("APROBADA".equals(estado)) { %>
-                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp" class="d-inline">
+                <form method="post" action="<%= ctx %>/inmobiliaria/gestionar_cita.jsp">
                     <input type="hidden" name="id_cita" value="<%= idCita %>">
                     <input type="hidden" name="accion" value="completar">
                     <button class="btn btn-sm btn-outline-secondary">Marcar completada</button>
                 </form>
 <%          } %>
+              </div>
             </td>
         </tr>
 <%

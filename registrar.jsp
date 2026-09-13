@@ -19,11 +19,21 @@
 
     String destino = "registro.jsp";
 
+    // Campos NO sensibles para repoblar el formulario si el registro falla.
+    // clave y clave2 nunca se incluyen aqui.
+    String repoblar = "&documento=" + java.net.URLEncoder.encode(documento == null ? "" : documento, "UTF-8")
+        + "&nombres=" + java.net.URLEncoder.encode(nombres == null ? "" : nombres, "UTF-8")
+        + "&apellidos=" + java.net.URLEncoder.encode(apellidos == null ? "" : apellidos, "UTF-8")
+        + "&correo=" + java.net.URLEncoder.encode(correo == null ? "" : correo, "UTF-8")
+        + "&username=" + java.net.URLEncoder.encode(username == null ? "" : username, "UTF-8")
+        + "&telefono=" + java.net.URLEncoder.encode(telefono == null ? "" : telefono, "UTF-8");
+
     if (documento == null || nombres == null || apellidos == null || correo == null
         || username == null || clave == null || clave.trim().isEmpty()
         || !clave.equals(clave2)) {
         response.sendRedirect(destino + "?error="
-            + java.net.URLEncoder.encode("Revisa los campos: las claves deben coincidir.", "UTF-8"));
+            + java.net.URLEncoder.encode("Revisa los campos: las claves deben coincidir.", "UTF-8")
+            + repoblar);
         return;
     }
 
@@ -72,10 +82,10 @@
 
     } catch (SQLIntegrityConstraintViolationException ex) {
         deshacer(con);
-        destino = "registro.jsp?error=" + java.net.URLEncoder.encode(mensajeError(ex), "UTF-8");
+        destino = "registro.jsp?error=" + java.net.URLEncoder.encode(mensajeError(ex), "UTF-8") + repoblar;
     } catch (SQLException ex) {
         deshacer(con);
-        destino = "registro.jsp?error=" + java.net.URLEncoder.encode(mensajeError(ex), "UTF-8");
+        destino = "registro.jsp?error=" + java.net.URLEncoder.encode(mensajeError(ex), "UTF-8") + repoblar;
     } finally {
         cerrar(rs, ps, con);
     }
